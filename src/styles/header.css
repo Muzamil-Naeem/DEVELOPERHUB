@@ -1,0 +1,66 @@
+/* *{
+    margin: 0;
+    font-family: 'Poppins', 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #141e30, #243b55);
+} */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(135deg, #141e30, #243b55); /* classy gradient */
+  padding: 15px 40px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+/* DevelopersHub Logo */
+.header h1 {
+  font-family: 'Poppins', 'Segoe UI', sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  margin: 0;
+  
+  /* gradient text */
+  background: linear-gradient(90deg, #00c6ff, #0072ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-transform: uppercase;
+}
+
+/* Navigation Links */
+.nav-links {
+  display: flex;
+  gap: 30px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #f1f1f1;
+  font-weight: 500;
+  font-size: 16px;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+/* Hover underline animation */
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 0%;
+  height: 2px;
+  background: #00c6ff;
+  transition: width 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: #00c6ff;
+}
+
+.nav-links a:hover::after {
+  width: 100%;
+}
