@@ -1,8 +1,8 @@
-/* *{
+*{
     margin: 0;
     font-family: 'Poppins', 'Segoe UI', sans-serif;
-    background: linear-gradient(135deg, #141e30, #243b55);
-} */
+    background: linear-gradient(135deg,);
+}
 .header {
   display: flex;
   justify-content: space-between;

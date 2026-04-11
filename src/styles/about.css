@@ -1,0 +1,110 @@
+
+/* GLOBAL */
+.about-page {
+  background: #0f172a;
+  color: white;
+  font-family: "Poppins", sans-serif;
+}
+
+/* HERO */
+.about-hero {
+  padding: 100px 20px;
+  text-align: center;
+  background: linear-gradient(135deg, #1e293b, #020617);
+}
+
+.about-hero h1 {
+  font-size: 2.8rem;
+}
+
+.about-hero p {
+  max-width: 700px;
+  margin: 20px auto;
+  color: #94a3b8;
+}
+
+/* STORY */
+.about-story {
+  padding: 80px 20px;
+  text-align: center;
+}
+
+.about-story .container {
+  max-width: 800px;
+  margin: auto;
+}
+
+/* MISSION VISION */
+.mission-vision {
+  padding: 80px 20px;
+  background: #020617;
+}
+
+.mv-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+}
+
+.mv-card {
+  background: #1e293b;
+  padding: 30px;
+  border-radius: 10px;
+  transition: 0.3s;
+}
+
+.mv-card:hover {
+  background: #334155;
+  transform: translateY(-5px);
+}
+
+/* VALUES */
+.values {
+  padding: 80px 20px;
+  text-align: center;
+}
+
+.values-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 25px;
+  margin-top: 40px;
+}
+
+.value-card {
+  background: #1e293b;
+  padding: 25px;
+  border-radius: 10px;
+}
+
+/* WHY US */
+.why-us {
+  padding: 80px 20px;
+  background: #020617;
+  text-align: center;
+}
+
+.why-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 30px;
+  margin-top: 40px;
+}
+
+/* CTA */
+.about-cta {
+  padding: 80px 20px;
+  text-align: center;
+  background: linear-gradient(135deg, #6366f1, #4f46e5);
+}
+
+.primary-btn {
+  margin-top: 20px;
+  background: white;
+  color: #4f46e5;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}
