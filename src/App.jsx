@@ -12,12 +12,15 @@ import { ToastContainer } from "react-toastify";
 import Signup from "./pages/signup";
 import BlogDetail from "./pages/blogdetails";
 import ScrollToTop from "./components/Scrolltop";
+import ToggleTheme from "./components/toggletheme";
 
 
 
 function App() {
+  
   return (
     <>
+      <ToggleTheme />
      
       <Header />
       <ScrollToTop />

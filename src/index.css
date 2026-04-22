@@ -1,3 +1,4 @@
+
 :root {
   /* Background */
   --bg-main: #0f172a;
@@ -11,8 +12,8 @@
   --text-muted-2: #94a3b8;
 
   /* Accent */
-  --primary: #00c6ff;
-  --primary-dark: #0072ff;
+   --primary: #3b82f6;
+  --primary-dark: #2563eb;
 
   /* UI */
   --hover-bg: rgba(99, 102, 241, 0.15);
@@ -40,8 +41,8 @@
   --text-secondary: #334155;
   --text-muted-2: #64748b;
 
-  --primary: #0072ff;
-  --primary-dark: #0056cc;
+    --primary: #6366f1;
+  --primary-dark: #4f46e5;
 
   --hover-bg: rgba(0, 0, 0, 0.08);
   --shadow: 0 6px 18px rgba(0, 0, 0, 0.15);

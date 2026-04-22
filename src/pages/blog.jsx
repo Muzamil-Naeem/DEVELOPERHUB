@@ -39,38 +39,45 @@ function Blog() {
   return (
     <div className="blog-page">
 
-      {/* HERO */}
+      {/* HERO SECTION */}
       <section className="blog-hero">
         <h1>Insights & Knowledge Hub</h1>
         <p>Learn modern tech, AI, and development practices.</p>
       </section>
 
-      {/* BLOG GRID */}
+      {/* BLOG LIST */}
       <section className="blogs">
         <h2>Latest Articles</h2>
 
         <div className="blog-grid">
-
           {blogs.map((blog) => (
-            <div
+            <article
               key={blog.id}
               className="blog-card"
               onClick={() => navigate(`/blog/${blog.id}`)}
             >
               <span className="tag">{blog.category}</span>
+
               <h3>{blog.title}</h3>
+
               <p>{blog.desc}</p>
 
               <div className="meta">
                 <span>{blog.read}</span>
               </div>
 
-              <button className="read-btn">
+              <button
+                className="read-btn"
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation(); // prevents double navigation issues
+                  navigate(`/blog/${blog.id}`);
+                }}
+              >
                 Read More →
               </button>
-            </div>
+            </article>
           ))}
-
         </div>
       </section>
 
