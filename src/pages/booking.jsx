@@ -1,7 +1,134 @@
-import React from "react";
+import React, { useState } from "react";
 import "../styles/booking.css";
+import Swal from "sweetalert2";
 
 function Booking() {
+  const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState({});
+
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    meetingType: "",
+    date: "",
+    time: "",
+    projectDetails: ""
+  });
+
+  const [booking, setBooking] = useState([]);
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+
+    // clear field error while typing
+    setErrors((prev) => ({
+      ...prev,
+      [e.target.name]: ""
+    }));
+
+    setSubmitted(false);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    setSubmitted(true);
+    setLoading(true);
+
+    let newErrors = {};
+
+    // ---------------- VALIDATION ----------------
+    if (!formData.name) newErrors.name = "Name is required.";
+    if (!formData.email) newErrors.email = "Email is required.";
+    if (!formData.date) newErrors.date = "Date is required.";
+    if (!formData.time) newErrors.time = "Time is required.";
+    if (!formData.projectDetails)
+      newErrors.projectDetails = "Project details are required.";
+    if (!formData.meetingType)
+      newErrors.meetingType = "Please select a meeting type.";
+
+    // ---------------- DATE/TIME CHECK ----------------
+    if (formData.date && formData.time) {
+      const selectedDateTime = new Date(
+        `${formData.date}T${formData.time}`
+      );
+      const now = new Date();
+
+      if (selectedDateTime < now) {
+        const today = new Date();
+
+        if (
+          new Date(formData.date).toDateString() ===
+          today.toDateString()
+        ) {
+          newErrors.time = "Please select a future time slot.";
+        } else {
+          newErrors.date = "Please select a future date.";
+        }
+      }
+    }
+
+    // ❌ STOP IF ERRORS EXIST
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      setLoading(false);
+      return;
+    }
+
+    // ---------------- DUPLICATE CHECK ----------------
+    const exist = booking.find(
+      (b) => b.date === formData.date && b.time === formData.time
+    );
+
+    if (exist) {
+      setErrors({
+        time: "This slot is already booked. Please choose another time."
+      });
+      setLoading(false);
+      return;
+    }
+
+    // ---------------- SUCCESS ----------------
+    setErrors({});
+
+    const newBooking = {
+      id: Date.now(),
+      ...formData
+    };
+
+    setBooking([...booking, newBooking]);
+
+    setTimeout(() => {
+      Swal.fire({
+        title: "Success!",
+        text: "Your meeting has been booked successfully!",
+        icon: "success"
+      });
+
+      setLoading(false);
+
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        meetingType: "",
+        date: "",
+        time: "",
+        projectDetails: ""
+      });
+    }, 600);
+  };
+
+  const handleCancel = (id) => {
+    const newBooking = booking.filter((b) => b.id !== id);
+    setBooking(newBooking);
+  };
+
   return (
     <div className="booking-page">
 
@@ -14,47 +141,135 @@ function Booking() {
         </p>
       </section>
 
-      {/* BOOKING FORM */}
+      {/* FORM */}
       <section className="booking-section">
-
         <h2>Meeting Details</h2>
 
-        <form className="booking-form">
+        <form className="booking-form" onSubmit={handleSubmit}>
 
-          <div className="form-row">
-            <input type="text" placeholder="Full Name" required />
-            <input type="email" placeholder="Email Address" required />
+          <div className="field">
+            <input
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              placeholder="Full Name"
+            />
+            {submitted && errors.name && (
+              <p className="error error-animate">{errors.name}</p>
+            )}
           </div>
 
-          <div className="form-row">
-            <input type="text" placeholder="Phone Number" />
-            <select>
-              <option>Select Meeting Type</option>
-              <option>Project Discussion</option>
-              <option>AI Consultation</option>
-              <option>Business Strategy</option>
-              <option>Technical Support</option>
+          <div className="field">
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              placeholder="Email Address"
+            />
+            {submitted && errors.email && (
+              <p className="error error-animate">{errors.email}</p>
+            )}
+          </div>
+
+          <div className="field">
+            <input
+              type="text"
+              name="phone"
+              value={formData.phone}
+              onChange={handleChange}
+              placeholder="Phone Number"
+            />
+          </div>
+
+          <div className="field">
+            <select
+              name="meetingType"
+              value={formData.meetingType}
+              onChange={handleChange}
+            >
+              <option value="">Select Meeting Type</option>
+              <option value="Project Discussion">Project Discussion</option>
+              <option value="AI Consultation">AI Consultation</option>
+              <option value="Business Strategy">Business Strategy</option>
+              <option value="Technical Support">Technical Support</option>
             </select>
+
+            {submitted && errors.meetingType && (
+              <p className="error error-animate">
+                {errors.meetingType}
+              </p>
+            )}
           </div>
 
-          <div className="form-row">
-            <input type="date" />
-            <input type="time" />
+          <div className="field">
+            <input
+              type="date"
+              name="date"
+              value={formData.date}
+              onChange={handleChange}
+              min={new Date().toISOString().split("T")[0]}
+            />
+            {submitted && errors.date && (
+              <p className="error error-animate">{errors.date}</p>
+            )}
           </div>
 
-          <textarea placeholder="Tell us about your project..."></textarea>
+          <div className="field">
+            <input
+              type="time"
+              name="time"
+              value={formData.time}
+              onChange={handleChange}
+            />
+            {submitted && errors.time && (
+              <p className="error error-animate">{errors.time}</p>
+            )}
+          </div>
 
-          <button type="submit">Confirm Booking</button>
+          <div className="field">
+            <textarea
+              name="projectDetails"
+              value={formData.projectDetails}
+              onChange={handleChange}
+              placeholder="Tell us about your project..."
+            />
+            {submitted && errors.projectDetails && (
+              <p className="error error-animate">
+                {errors.projectDetails}
+              </p>
+            )}
+          </div>
 
+          <button type="submit" disabled={loading}>
+            {loading ? "Booking..." : "Confirm Booking"}
+          </button>
         </form>
+
+        {/* BOOKINGS */}
+        <h3 className="upcoming">Upcoming Bookings</h3>
+
+        {booking.map((b) => (
+          <div key={b.id} className="booking-card">
+            <p>
+              {b.name} - {b.date} at {b.time}
+            </p>
+            <button
+              className="cancel"
+              onClick={() => handleCancel(b.id)}
+            >
+              Cancel Booking
+            </button>
+          </div>
+        ))}
       </section>
 
-      {/* INFO SECTION */}
+      {/* INFO */}
       <section className="booking-info">
         <h2>What Happens Next?</h2>
 
         <div className="info-grid">
-
           <div className="info-card">
             <h3>📩 Confirmation</h3>
             <p>You will receive a confirmation email after booking.</p>
@@ -69,7 +284,6 @@ function Booking() {
             <h3>🚀 Execution Plan</h3>
             <p>We discuss your goals and create a clear roadmap.</p>
           </div>
-
         </div>
       </section>
 

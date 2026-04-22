@@ -1,7 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "../styles/services.css";
+import { useNavigate } from "react-router-dom";
 
 function Services() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    console.log("Services page loaded");
+  }, []);
+
+  const handleContact = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    navigate("/contact");
+  };
+
   return (
     <div className="services-page">
 
@@ -25,52 +37,48 @@ function Services() {
             <h3>💻 Web Development</h3>
             <p>
               We build modern, responsive, and high-performance web applications
-              using React and latest frontend technologies. Our websites are
-              optimized for speed, scalability, and user experience.
+              using React and latest frontend technologies. Optimized for speed,
+              scalability, and user experience.
             </p>
           </div>
 
           <div className="service-card">
             <h3>📱 Mobile App Development</h3>
             <p>
-              We develop cross-platform mobile applications that run smoothly on
-              both Android and iOS with clean UI and strong backend integration.
+              Cross-platform mobile applications for Android and iOS with clean UI,
+              smooth performance, and strong backend integration.
             </p>
           </div>
 
           <div className="service-card">
             <h3>🤖 AI & Automation Solutions</h3>
             <p>
-              We create intelligent systems like AI chatbots, automation tools,
-              and smart workflows to reduce manual work and improve business
-              efficiency.
+              Intelligent systems like AI chatbots, automation tools, and smart workflows
+              that reduce manual work and improve efficiency.
             </p>
           </div>
 
           <div className="service-card">
             <h3>📈 Digital Marketing</h3>
             <p>
-              We help businesses grow online through SEO, social media marketing,
-              paid ads, and conversion-focused strategies that increase reach and
-              engagement.
+              SEO, social media marketing, paid ads, and conversion strategies designed
+              to grow your online presence and engagement.
             </p>
           </div>
 
           <div className="service-card">
             <h3>🎨 UI/UX Design</h3>
             <p>
-              We design modern, user-friendly interfaces that improve usability,
-              engagement, and customer satisfaction through clean and intuitive
-              design systems.
+              Modern, user-friendly interfaces focused on usability, engagement,
+              and clean design systems for better user experience.
             </p>
           </div>
 
           <div className="service-card">
             <h3>⚙️ Backend & API Development</h3>
             <p>
-              We build secure and scalable backend systems, REST APIs, and
-              database architectures that power modern web and mobile
-              applications.
+              Secure and scalable backend systems, REST APIs, and database architecture
+              powering modern applications.
             </p>
           </div>
 
@@ -83,19 +91,19 @@ function Services() {
 
         <div className="why-grid">
 
-          <div>
+          <div className="why-card">
             <h3>🚀 Fast Delivery</h3>
-            <p>We deliver projects on time with high-quality standards.</p>
+            <p>We deliver high-quality projects within deadlines.</p>
           </div>
 
-          <div>
+          <div className="why-card">
             <h3>💡 Modern Technology</h3>
-            <p>We use latest tools and frameworks for scalable solutions.</p>
+            <p>We use latest frameworks and tools for scalable solutions.</p>
           </div>
 
-          <div>
+          <div className="why-card">
             <h3>📊 Business Focused</h3>
-            <p>Every solution is designed to improve business growth.</p>
+            <p>Every solution is designed to maximize business growth.</p>
           </div>
 
         </div>
@@ -120,7 +128,10 @@ function Services() {
           Partner with us to turn your ideas into scalable digital solutions
           that grow your business.
         </p>
-        <button>Contact Us</button>
+
+        <button onClick={handleContact}>
+          Contact Us
+        </button>
       </section>
 
     </div>

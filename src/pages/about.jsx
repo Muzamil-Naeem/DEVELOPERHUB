@@ -1,7 +1,10 @@
 import React from "react";
 import "../styles/about.css";
+import { useNavigate } from "react-router-dom";
 
 function About() {
+  const navigate = useNavigate();
+
   return (
     <div className="about-page">
 
@@ -102,6 +105,35 @@ function About() {
         </div>
       </section>
 
+      {/* ⭐ NEW: OUR JOURNEY TIMELINE */}
+      <section className="timeline">
+        <h2>Our Journey</h2>
+
+        <div className="timeline-grid">
+
+          <div className="timeline-item">
+            <h3>2023</h3>
+            <p>Started as a small development team with big dreams.</p>
+          </div>
+
+          <div className="timeline-item">
+            <h3>2024</h3>
+            <p>Delivered first 20+ successful client projects globally.</p>
+          </div>
+
+          <div className="timeline-item">
+            <h3>2025</h3>
+            <p>Expanded into AI, automation, and cloud solutions.</p>
+          </div>
+
+          <div className="timeline-item">
+            <h3>2026</h3>
+            <p>Now building scalable digital products for global clients.</p>
+          </div>
+
+        </div>
+      </section>
+
       {/* CTA */}
       <section className="about-cta">
         <h2>Let’s Work Together</h2>
@@ -109,7 +141,16 @@ function About() {
           Have an idea or project? Let’s turn it into reality with the power of
           technology.
         </p>
-        <button className="primary-btn">Contact Us</button>
+
+        <button
+          className="primary-btn"
+          onClick={() => {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+            navigate("/contact");
+          }}
+        >
+          Contact Us
+        </button>
       </section>
 
     </div>

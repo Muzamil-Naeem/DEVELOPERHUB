@@ -1,66 +1,205 @@
-*{
-    margin: 0;
-    font-family: 'Poppins', 'Segoe UI', sans-serif;
-    background: linear-gradient(135deg,);
-}
+/* ========================= */
+/* HEADER */
+/* ========================= */
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: linear-gradient(135deg, #141e30, #243b55); /* classy gradient */
+  background: var(--header-bg);
   padding: 15px 40px;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
+  box-shadow: var(--shadow);
   position: sticky;
   top: 0;
   z-index: 1000;
 }
 
-/* DevelopersHub Logo */
+/* LOGO */
 .header h1 {
-  font-family: 'Poppins', 'Segoe UI', sans-serif;
-  font-size: 28px;
+  font-size: 26px;
   font-weight: 700;
   letter-spacing: 1.5px;
-  margin: 0;
-  
-  /* gradient text */
-  background: linear-gradient(90deg, #00c6ff, #0072ff);
+  background: linear-gradient(90deg, var(--primary), var(--primary-dark));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   text-transform: uppercase;
 }
 
-/* Navigation Links */
+/* ========================= */
+/* NAV */
+/* ========================= */
 .nav-links {
   display: flex;
-  gap: 30px;
+  align-items: center;
+  gap: 25px;
 }
 
-.nav-links a {
+/* LINKS */
+.nav-links a,
+.dropdown-title {
   text-decoration: none;
-  color: #f1f1f1;
+  color: var(--text-light);
+  font-size: 15px;
   font-weight: 500;
-  font-size: 16px;
+  cursor: pointer;
   position: relative;
-  transition: all 0.3s ease;
 }
 
-/* Hover underline animation */
-.nav-links a::after {
+/* UNDERLINE EFFECT */
+.nav-links a::after,
+.dropdown-title::after {
   content: "";
   position: absolute;
   left: 0;
   bottom: -6px;
   width: 0%;
   height: 2px;
-  background: #00c6ff;
-  transition: width 0.3s ease;
+  background: var(--primary);
+  transition: 0.3s ease;
 }
 
-.nav-links a:hover {
-  color: #00c6ff;
+.nav-links a:hover,
+.dropdown-title:hover {
+  color: var(--primary);
 }
 
-.nav-links a:hover::after {
+.nav-links a:hover::after,
+.dropdown-title:hover::after {
   width: 100%;
+}
+
+/* ========================= */
+/* DROPDOWN */
+/* ========================= */
+.dropdown {
+  position: relative;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 35px;
+  left: 0;
+  min-width: 170px;
+  background: var(--dropdown-bg);
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: 0.25s ease;
+
+  z-index: 9999;
+}
+
+/* HOVER LOGIC */
+.dropdown:hover .dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* DROPDOWN LINKS */
+.dropdown-menu a {
+  display: block;
+  padding: 12px 15px;
+  color: var(--text-muted);
+  font-size: 14px;
+  border-radius: 6px;
+  transition: 0.2s;
+}
+
+.dropdown-menu a:hover {
+  background: var(--hover-bg);
+  color: var(--primary);
+}
+
+/* ========================= */
+/* LOGIN BUTTON */
+/* ========================= */
+.login-btn {
+  background: var(--primary-dark);
+  padding: 8px 16px;
+  border-radius: 6px;
+  color: white !important;
+  transition: 0.3s;
+}
+
+.login-btn:hover {
+  background: var(--primary);
+}
+
+/* ========================= */
+/* HAMBURGER MENU */
+/* ========================= */
+.menu-icon {
+  display: none;
+  font-size: 26px;
+  color: var(--text-color);
+  cursor: pointer;
+}
+
+/* ========================= */
+/* RESPONSIVE DESIGN */
+/* ========================= */
+
+/* TABLET */
+@media (max-width: 1024px) {
+  .header {
+    padding: 15px 25px;
+  }
+
+  .nav-links {
+    gap: 18px;
+  }
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+
+  .menu-icon {
+    display: block;
+  }
+
+  .nav-links {
+    position: absolute;
+    top: 70px;
+    right: 0;
+    width: 100%;
+    background: var(--dropdown-bg);
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 20px 0;
+    display: none;
+  }
+
+  .nav-links.active {
+    display: flex;
+  }
+
+  .dropdown-menu {
+    position: static;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    background: transparent;
+    box-shadow: none;
+    padding: 0;
+  }
+
+  .dropdown-menu a {
+    padding: 8px 0;
+  }
+}
+
+/* SMALL MOBILE */
+@media (max-width: 480px) {
+  .header h1 {
+    font-size: 20px;
+  }
+
+  .nav-links a,
+  .dropdown-title {
+    font-size: 14px;
+  }
 }

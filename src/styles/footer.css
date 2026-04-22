@@ -1,7 +1,109 @@
-.footer{
-  background-color: black;
-  color: white;
+/* ========================= */
+/* FOOTER BASE */
+/* ========================= */
+.footer {
+  background: var(--dropdown-bg);
+  color: var(--text-color);
+  padding-top: 60px;
+  margin-top: 80px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* ========================= */
+/* FOOTER GRID */
+/* ========================= */
+.footer-container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 0 20px;
+
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 40px;
+}
+
+/* ========================= */
+/* BRAND */
+/* ========================= */
+.footer-brand h2 {
+  color: var(--primary);
+  margin-bottom: 10px;
+}
+
+.footer-brand p {
+  color: var(--text-muted);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* ========================= */
+/* LINKS + CONTACT HEADINGS */
+/* ========================= */
+.footer-links h3,
+.footer-contact h3 {
+  margin-bottom: 15px;
+  color: var(--text-color);
+  font-size: 16px;
+}
+
+/* ========================= */
+/* LINKS */
+/* ========================= */
+.footer-links a {
+  display: block;
+  color: var(--text-muted);
+  text-decoration: none;
+  margin-bottom: 10px;
+  font-size: 14px;
+  transition: 0.3s;
+}
+
+.footer-links a:hover {
+  color: var(--primary);
+  transform: translateX(5px);
+}
+
+/* ========================= */
+/* CONTACT */
+/* ========================= */
+.footer-contact p {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+/* ========================= */
+/* BOTTOM BAR */
+/* ========================= */
+.footer-bottom {
+  margin-top: 50px;
   text-align: center;
-  padding: 10px;
-  margin-bottom: 0;
+  padding: 15px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+/* ========================= */
+/* RESPONSIVE DESIGN */
+/* ========================= */
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .footer-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .footer-container {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .footer-links a {
+    margin-bottom: 8px;
+  }
 }

@@ -1,7 +1,80 @@
-import React from "react";
+import React, { useState } from "react";
 import "../styles/portfolio.css";
+import { useNavigate } from "react-router-dom";
 
 function Portfolio() {
+  const navigate = useNavigate();
+  const [filter, setFilter] = useState("All");
+  const [activeProject, setActiveProject] = useState(null);
+
+  // =========================
+  // MORE REALISTIC PROJECTS
+  // =========================
+  const projects = [
+    {
+      title: "AI Chatbot Platform",
+      desc: "Automated support system with intelligent responses.",
+      tag: "AI",
+      type: "AI"
+    },
+    {
+  title: "Freelance Management System",
+  desc: "Platform to manage clients, invoices, and project tracking in one dashboard.",
+  tag: "SaaS Tool",
+  type: "Web"
+},
+    {
+      title: "SaaS Analytics Dashboard",
+      desc: "Real-time business insights and analytics platform.",
+      tag: "Web App",
+      type: "Web"
+    },
+    {
+      title: "E-Commerce System",
+      desc: "Full-stack online store with payments integration.",
+      tag: "E-Commerce",
+      type: "Ecommerce"
+    },
+    {
+      title: "AI Content Generator",
+      desc: "Generates blogs, ads, and marketing content instantly.",
+      tag: "AI Tool",
+      type: "AI"
+    },
+    {
+      title: "Portfolio Builder App",
+      desc: "Drag-and-drop portfolio creation system.",
+      tag: "Web App",
+      type: "Web"
+    },
+    {
+      title: "Food Delivery App UI",
+      desc: "Modern UI for food ordering and delivery system.",
+      tag: "UI/UX",
+      type: "Web"
+    },
+    {
+      title: "Crypto Tracking Dashboard",
+      desc: "Live crypto prices with charts and analytics.",
+      tag: "Finance",
+      type: "Web"
+    },
+    {
+      title: "Job Portal System",
+      desc: "Job posting and candidate application platform.",
+      tag: "Web App",
+      type: "Web"
+    }
+  ];
+
+  // =========================
+  // FILTER LOGIC
+  // =========================
+  const filteredProjects =
+    filter === "All"
+      ? projects
+      : projects.filter((p) => p.type === filter);
+
   return (
     <div className="portfolio-page">
 
@@ -9,47 +82,72 @@ function Portfolio() {
       <section className="portfolio-hero">
         <h1>Our Portfolio</h1>
         <p>
-          Our work reflects a blend of innovation, technology, and strategy.
-          We build scalable digital solutions that help businesses grow,
-          automate processes, and deliver exceptional user experiences.
+          We design and develop scalable digital products, AI systems, and
+          modern web applications for real-world impact.
         </p>
+      </section>
+
+      {/* FILTER BAR */}
+      <section className="filter-section">
+        <div className="filter-bar">
+          <button onClick={() => setFilter("All")} className={filter === "All" ? "active" : ""}>All</button>
+          <button onClick={() => setFilter("AI")} className={filter === "AI" ? "active" : ""}>AI</button>
+          <button onClick={() => setFilter("Web")} className={filter === "Web" ? "active" : ""}>Web</button>
+          <button onClick={() => setFilter("Ecommerce")} className={filter === "Ecommerce" ? "active" : ""}>E-Commerce</button>
+        </div>
       </section>
 
       {/* PROJECTS */}
       <section className="projects">
-        <h2>Featured Work</h2>
+        <h2>Featured Case Studies</h2>
         <p className="subtitle">
-          A selection of impactful solutions we’ve delivered across industries.
+          Real-world projects built with scalable architecture.
         </p>
 
         <div className="project-grid">
 
-          <div className="project-card">
-            <h3>AI Chatbot Platform</h3>
-            <p>Automated customer support system with intelligent responses.</p>
-            <span className="tag">AI Solution</span>
-          </div>
+          {filteredProjects.map((project, index) => (
+            <div
+              key={index}
+              className="project-card"
+              onClick={() => setActiveProject(project)}
+            >
+              <h3>{project.title}</h3>
+              <p>{project.desc}</p>
 
-          <div className="project-card">
-            <h3>SaaS Analytics Dashboard</h3>
-            <p>Real-time data visualization and business insights platform.</p>
-            <span className="tag">Web App</span>
-          </div>
+              <span className="tag">{project.tag}</span>
 
-          <div className="project-card">
-            <h3>E-Commerce System</h3>
-            <p>Complete online store with payments and product management.</p>
-            <span className="tag">E-Commerce</span>
-          </div>
-
-          <div className="project-card">
-            <h3>AI Content Generator</h3>
-            <p>Tool to generate blogs, ads, and marketing content instantly.</p>
-            <span className="tag">AI Tool</span>
-          </div>
+              <div className="card-footer">
+                <button className="demo-btn">
+                  View Case Study
+                </button>
+              </div>
+            </div>
+          ))}
 
         </div>
       </section>
+
+      {/* MODAL */}
+      {activeProject && (
+        <div
+          className="modal-overlay"
+          onClick={() => setActiveProject(null)}
+        >
+          <div className="modal" onClick={(e) => e.stopPropagation()}>
+            <h2>{activeProject.title}</h2>
+            <p>{activeProject.desc}</p>
+
+            <p className="tech">
+              Tech Stack: React, Node.js, MongoDB, AI APIs
+            </p>
+
+            <button onClick={() => setActiveProject(null)}>
+              Close
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* EXPERTISE */}
       <section className="expertise">
@@ -57,96 +155,74 @@ function Portfolio() {
 
         <div className="expertise-grid">
           <div className="exp-card">
-            <h3>💻 Software Development</h3>
-            <p>Scalable web, mobile, and SaaS applications.</p>
+            <h3>💻 Web Development</h3>
+            <p>Modern scalable applications.</p>
           </div>
 
           <div className="exp-card">
-            <h3>🤖 AI & Automation</h3>
-            <p>Smart systems to automate workflows and decision-making.</p>
+            <h3>🤖 AI Systems</h3>
+            <p>Automation and intelligent tools.</p>
           </div>
 
           <div className="exp-card">
-            <h3>📈 Digital Growth</h3>
-            <p>Marketing strategies that increase traffic and conversions.</p>
+            <h3>📊 Data Solutions</h3>
+            <p>Analytics and business intelligence.</p>
           </div>
 
           <div className="exp-card">
             <h3>🎨 UI/UX Design</h3>
-            <p>Modern, user-friendly, and engaging digital experiences.</p>
-          </div>
-        </div>
-      </section>
-
-      {/* ACHIEVEMENTS */}
-      <section className="achievements">
-        <h2>Our Achievements</h2>
-
-        <div className="achieve-grid">
-          <div>
-            <h3>50+</h3>
-            <p>Projects Delivered</p>
-          </div>
-
-          <div>
-            <h3>30+</h3>
-            <p>Happy Clients</p>
-          </div>
-
-          <div>
-            <h3>10+</h3>
-            <p>Industries Served</p>
-          </div>
-
-          <div>
-            <h3>100%</h3>
-            <p>Client Satisfaction</p>
+            <p>Clean and modern interfaces.</p>
           </div>
         </div>
       </section>
 
       {/* IMPACT */}
       <section className="impact">
-        <h2>How We Help Businesses Grow</h2>
+        <h2>Business Impact</h2>
 
         <div className="impact-grid">
           <div>
-            <h3>🚀 Increase Efficiency</h3>
-            <p>Automation reduces manual work and saves time.</p>
+            <h3>🚀 Efficiency</h3>
+            <p>Automation reduces manual work.</p>
           </div>
 
           <div>
-            <h3>📊 Better Decisions</h3>
-            <p>Data-driven insights improve business strategies.</p>
+            <h3>📊 Decisions</h3>
+            <p>Data-driven insights improve growth.</p>
           </div>
 
           <div>
-            <h3>🌍 Expand Reach</h3>
-            <p>Digital platforms help businesses reach global audiences.</p>
+            <h3>🌍 Scale</h3>
+            <p>Built for global reach.</p>
           </div>
         </div>
       </section>
 
       {/* PROCESS */}
       <section className="process">
-        <h2>From Idea to Launch</h2>
+        <h2>From Idea to Product</h2>
 
         <div className="process-grid">
-          <div>1. Research & Planning</div>
-          <div>2. Design & Prototyping</div>
+          <div>1. Research</div>
+          <div>2. Design</div>
           <div>3. Development</div>
-          <div>4. Testing & Launch</div>
+          <div>4. Launch</div>
         </div>
       </section>
 
       {/* CTA */}
       <section className="portfolio-cta">
-        <h2>Let’s Build Your Next Project</h2>
-        <p>
-          Partner with us to create innovative, scalable, and impactful
-          digital solutions.
-        </p>
-        <button className="primary-btn">Start a Project</button>
+        <h2>Let’s Build Something Powerful</h2>
+        <p>Turn your idea into a real-world digital product.</p>
+
+        <button
+          onClick={() => {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+            navigate("/contact");
+          }}
+        >
+          Start a Project
+        </button>
       </section>
 
     </div>

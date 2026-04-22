@@ -8,14 +8,21 @@ import Booking from "./pages/booking";
 import Blog from "./pages/blog";
 import Services from "./pages/services";
 import { Routes, Route } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import Signup from "./pages/signup";
+import BlogDetail from "./pages/blogdetails";
+import ScrollToTop from "./components/Scrolltop";
+
 
 
 function App() {
   return (
     <>
+     
       <Header />
-
+      <ScrollToTop />
       <Routes>
+        <Route path="/signup" element={<Signup />} />
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/services" element={<Services />} />
@@ -23,9 +30,11 @@ function App() {
          <Route path="/contact" element={<Contact />} />
          <Route path="/booking" element={<Booking />} />
          <Route path="/blog" element={<Blog />} /> 
+         <Route path="/blog/:id" element={<BlogDetail />} />
       </Routes>
-
+        <ToastContainer position="top-right" />
       <Footer />
+          
     </>
   );
 }

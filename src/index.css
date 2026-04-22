@@ -1,14 +1,56 @@
-html, body {
-  height: 100%;
-  margin: 0;
+:root {
+  /* Background */
+  --bg-main: #0f172a;
+  --header-bg: #141e30;
+  --dropdown-bg: #0f172a;
+
+  /* Text */
+  --text-color: #ffffff;
+  --text-muted: #cbd5f5;
+  --text-secondary: #cbd5f5;
+  --text-muted-2: #94a3b8;
+
+  /* Accent */
+  --primary: #00c6ff;
+  --primary-dark: #0072ff;
+
+  /* UI */
+  --hover-bg: rgba(99, 102, 241, 0.15);
+  --shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
+
+  /* Cards */
+  --card-bg: #1e293b;
+  --card-hover: #273449;
+
+  /* Borders */
+  --border-light: rgba(255,255,255,0.05);
+
+  /* HERO (FIXED — IMPORTANT) */
+  --hero-bg: radial-gradient(circle at top, #0f172a, #020617);
 }
 
-.app {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
+/* LIGHT MODE */
+.dark {
+  --bg-main: #ffffff;
+  --header-bg: #f5f5f5;
+  --dropdown-bg: #ffffff;
 
-.content {
-  flex: 1;
+  --text-color: #0f172a;
+  --text-muted: #555;
+  --text-secondary: #334155;
+  --text-muted-2: #64748b;
+
+  --primary: #0072ff;
+  --primary-dark: #0056cc;
+
+  --hover-bg: rgba(0, 0, 0, 0.08);
+  --shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+
+  --card-bg: #ffffff;
+  --card-hover: #f1f5f9;
+
+  --border-light: rgba(0,0,0,0.08);
+
+  /* HERO LIGHT FIX */
+  --hero-bg: radial-gradient(circle at top, #ffffff, #f1f5f9);
 }
