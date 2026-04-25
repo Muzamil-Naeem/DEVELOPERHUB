@@ -1,11 +1,31 @@
-import React, { useState } from "react";
+import React,{ useState, useEffect, useRef } from "react";
 import "../styles/portfolio.css";
 import { useNavigate } from "react-router-dom";
 
+import {
+  animatePortfolioHero,
+  animateProjectCards,
+  animateFilterBar,
+  animateExpertise,
+  animateImpact,
+  animateProcess,
+  animatePortfolioCTA
+} from "../animations/portfolioanimations";
+
 function Portfolio() {
-  const navigate = useNavigate();
+   const navigate = useNavigate();
+
+  const heroRef = useRef(null);
+  const filterRef = useRef(null);
+  const cardsRef = useRef([]);
+  const expertiseRef = useRef(null);
+  const impactRef = useRef(null);
+  const processRef = useRef(null);
+  const ctaRef = useRef(null);
+
   const [filter, setFilter] = useState("All");
   const [activeProject, setActiveProject] = useState(null);
+
 
   // =========================
   // MORE REALISTIC PROJECTS
@@ -74,12 +94,21 @@ function Portfolio() {
     filter === "All"
       ? projects
       : projects.filter((p) => p.type === filter);
+        useEffect(() => {
+    animatePortfolioHero(heroRef.current);
+    animateFilterBar(filterRef.current);
+    animateProjectCards(cardsRef.current);
+    animateExpertise(expertiseRef.current?.children);
+    animateImpact(impactRef.current?.children);
+    animateProcess(processRef.current?.children);
+    animatePortfolioCTA(ctaRef.current);
+  }, [filter]); // 🔥 important: re-animate on filter change
 
   return (
     <div className="portfolio-page">
 
       {/* HERO */}
-      <section className="portfolio-hero">
+      <section className="portfolio-hero" ref={heroRef}>
         <h1>Our Portfolio</h1>
         <p>
           We design and develop scalable digital products, AI systems, and
@@ -88,7 +117,7 @@ function Portfolio() {
       </section>
 
       {/* FILTER BAR */}
-      <section className="filter-section">
+      <section className="filter-section" ref={filterRef}>
         <div className="filter-bar">
           <button onClick={() => setFilter("All")} className={filter === "All" ? "active" : ""}>All</button>
           <button onClick={() => setFilter("AI")} className={filter === "AI" ? "active" : ""}>AI</button>
@@ -98,7 +127,7 @@ function Portfolio() {
       </section>
 
       {/* PROJECTS */}
-      <section className="projects">
+      <section className="projects" ref={cardsRef}>
         <h2>Featured Case Studies</h2>
         <p className="subtitle">
           Real-world projects built with scalable architecture.
@@ -110,6 +139,7 @@ function Portfolio() {
             <div
               key={index}
               className="project-card"
+              ref={(el) => (cardsRef.current[index] = el)}
               onClick={() => setActiveProject(project)}
             >
               <h3>{project.title}</h3>
@@ -150,7 +180,7 @@ function Portfolio() {
       )}
 
       {/* EXPERTISE */}
-      <section className="expertise">
+      <section className="expertise" ref={expertiseRef}>
         <h2>Our Expertise</h2>
 
         <div className="expertise-grid">
@@ -177,7 +207,7 @@ function Portfolio() {
       </section>
 
       {/* IMPACT */}
-      <section className="impact">
+      <section className="impact" ref={impactRef}>
         <h2>Business Impact</h2>
 
         <div className="impact-grid">
@@ -199,7 +229,7 @@ function Portfolio() {
       </section>
 
       {/* PROCESS */}
-      <section className="process">
+      <section className="process" ref={processRef}>
         <h2>From Idea to Product</h2>
 
         <div className="process-grid">
@@ -211,7 +241,7 @@ function Portfolio() {
       </section>
 
       {/* CTA */}
-      <section className="portfolio-cta">
+      <section className="portfolio-cta" ref={ctaRef}>
         <h2>Let’s Build Something Powerful</h2>
         <p>Turn your idea into a real-world digital product.</p>
 

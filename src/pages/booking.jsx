@@ -1,8 +1,27 @@
 import React, { useState } from "react";
 import "../styles/booking.css";
 import Swal from "sweetalert2";
+import { useEffect, useRef } from "react";
+import {
+  bookingHeroAnim,
+  bookingFormAnim,
+  bookingFieldsAnim,
+  bookingCardsAnim,
+  bookingInfoAnim
+} from "../animations/bookingAnimations";
 
 function Booking() {
+  const heroRef = useRef(null);
+const formRef = useRef(null);
+const fieldRefs = useRef([]);
+const infoRef = useRef(null);
+useEffect(() => {
+  bookingHeroAnim(heroRef.current);
+  bookingFormAnim(formRef.current);
+  bookingFieldsAnim(fieldRefs.current);
+  bookingCardsAnim(document.querySelectorAll(".booking-card"));
+  bookingInfoAnim(infoRef.current);
+}, []);
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
@@ -17,7 +36,13 @@ function Booking() {
     projectDetails: ""
   });
 
-  const [booking, setBooking] = useState([]);
+  const [booking, setBooking] = useState(() => {
+  const saved = localStorage.getItem("bookings");
+  return saved ? JSON.parse(saved) : [];
+});
+useEffect(() => {
+  localStorage.setItem("bookings", JSON.stringify(booking));
+}, [booking]);
 
   const handleChange = (e) => {
     setFormData({
@@ -133,7 +158,7 @@ function Booking() {
     <div className="booking-page">
 
       {/* HERO */}
-      <section className="booking-hero">
+      <section className="booking-hero" ref={heroRef}>
         <h1>Schedule a Meeting</h1>
         <p>
           Book a consultation with our team to discuss your project ideas,
@@ -145,9 +170,9 @@ function Booking() {
       <section className="booking-section">
         <h2>Meeting Details</h2>
 
-        <form className="booking-form" onSubmit={handleSubmit}>
+        <form className="booking-form" onSubmit={handleSubmit} ref={formRef}>
 
-          <div className="field">
+          <div className="field" ref={(el) => fieldRefs.current[0] = el}>
             <input
               type="text"
               name="name"
@@ -160,7 +185,7 @@ function Booking() {
             )}
           </div>
 
-          <div className="field">
+          <div className="field" ref={(el) => fieldRefs.current[1] = el}>
             <input
               type="email"
               name="email"
@@ -173,7 +198,7 @@ function Booking() {
             )}
           </div>
 
-          <div className="field">
+          <div className="field" ref={(el) => fieldRefs.current[2] = el}>
             <input
               type="text"
               name="phone"
@@ -183,7 +208,7 @@ function Booking() {
             />
           </div>
 
-          <div className="field">
+          <div className="field" ref={(el) => fieldRefs.current[3] = el}>
             <select
               name="meetingType"
               value={formData.meetingType}
@@ -203,7 +228,7 @@ function Booking() {
             )}
           </div>
 
-          <div className="field">
+          <div className="field" ref={(el) => fieldRefs.current[4] = el}>
             <input
               type="date"
               name="date"
@@ -216,7 +241,7 @@ function Booking() {
             )}
           </div>
 
-          <div className="field">
+          <div className="field" ref={(el) => fieldRefs.current[5] = el}>
             <input
               type="time"
               name="time"
@@ -228,7 +253,7 @@ function Booking() {
             )}
           </div>
 
-          <div className="field">
+          <div className="field" ref={(el) => fieldRefs.current[6] = el}>
             <textarea
               name="projectDetails"
               value={formData.projectDetails}
@@ -266,7 +291,7 @@ function Booking() {
       </section>
 
       {/* INFO */}
-      <section className="booking-info">
+      <section className="booking-info" ref={infoRef}>
         <h2>What Happens Next?</h2>
 
         <div className="info-grid">

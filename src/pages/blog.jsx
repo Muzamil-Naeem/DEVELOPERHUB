@@ -1,8 +1,14 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/blog.css";
+import {
+  animateBlogHero,
+  animateBlogCards,
+  animateBlogTitle
+} from "../animations/bloganimations";
 
 function Blog() {
+
   const navigate = useNavigate();
 
   const blogs = [

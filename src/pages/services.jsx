@@ -1,12 +1,55 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import "../styles/services.css";
 import { useNavigate } from "react-router-dom";
+
+import {
+  animateServicesHero,
+  animateServiceCards,
+  animateWhyCards,
+  animateProcess,
+  animateCTA,
+} from "../animations/servicesanimations";
+
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 function Services() {
   const navigate = useNavigate();
 
+  /* =========================
+     REFS (CLEAN + STABLE)
+  ========================= */
+  const heroRef = useRef(null);
+  const servicesRef = useRef(null);
+  const whyRef = useRef(null);
+  const processRef = useRef(null);
+  const ctaRef = useRef(null);
+
+  /* =========================
+     GSAP INIT (FIXED)
+  ========================= */
   useEffect(() => {
-    console.log("Services page loaded");
+    // HERO
+    animateServicesHero(heroRef.current);
+
+    // SECTIONS
+    animateServiceCards(servicesRef.current);
+    animateWhyCards(whyRef.current);
+    animateProcess(processRef.current);
+    animateCTA(ctaRef.current);
+
+    // FORCE REFRESH (IMPORTANT)
+    const timer = setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 300);
+
+    // CLEANUP (VERY IMPORTANT)
+    return () => {
+      clearTimeout(timer);
+      ScrollTrigger.getAll().forEach((t) => t.kill());
+    };
   }, []);
 
   const handleContact = () => {
@@ -17,100 +60,84 @@ function Services() {
   return (
     <div className="services-page">
 
-      {/* HERO */}
-      <section className="services-hero">
+      {/* =========================
+          HERO
+      ========================= */}
+      <section className="services-hero" ref={heroRef}>
         <h1>Our Services</h1>
         <p>
           We provide end-to-end digital solutions that help businesses grow,
-          automate operations, and build scalable modern products using
-          cutting-edge technologies like AI, web development, and cloud systems.
+          automate operations, and build scalable modern products.
         </p>
       </section>
 
-      {/* SERVICES GRID */}
+      {/* =========================
+          SERVICES
+      ========================= */}
       <section className="services-grid-section">
         <h2>What We Offer</h2>
 
-        <div className="services-grid">
-
+        <div className="services-grid" ref={servicesRef}>
           <div className="service-card">
             <h3>💻 Web Development</h3>
-            <p>
-              We build modern, responsive, and high-performance web applications
-              using React and latest frontend technologies. Optimized for speed,
-              scalability, and user experience.
-            </p>
+            <p>Modern responsive web apps using React.</p>
           </div>
 
           <div className="service-card">
             <h3>📱 Mobile App Development</h3>
-            <p>
-              Cross-platform mobile applications for Android and iOS with clean UI,
-              smooth performance, and strong backend integration.
-            </p>
+            <p>Cross-platform mobile apps.</p>
           </div>
 
           <div className="service-card">
-            <h3>🤖 AI & Automation Solutions</h3>
-            <p>
-              Intelligent systems like AI chatbots, automation tools, and smart workflows
-              that reduce manual work and improve efficiency.
-            </p>
+            <h3>🤖 AI & Automation</h3>
+            <p>Smart AI systems and workflows.</p>
           </div>
 
           <div className="service-card">
             <h3>📈 Digital Marketing</h3>
-            <p>
-              SEO, social media marketing, paid ads, and conversion strategies designed
-              to grow your online presence and engagement.
-            </p>
+            <p>SEO and growth strategies.</p>
           </div>
 
           <div className="service-card">
             <h3>🎨 UI/UX Design</h3>
-            <p>
-              Modern, user-friendly interfaces focused on usability, engagement,
-              and clean design systems for better user experience.
-            </p>
+            <p>Clean modern interfaces.</p>
           </div>
 
           <div className="service-card">
-            <h3>⚙️ Backend & API Development</h3>
-            <p>
-              Secure and scalable backend systems, REST APIs, and database architecture
-              powering modern applications.
-            </p>
+            <h3>⚙️ Backend Development</h3>
+            <p>Scalable APIs and systems.</p>
           </div>
-
         </div>
       </section>
 
-      {/* WHY CHOOSE US */}
+      {/* =========================
+          WHY CHOOSE US
+      ========================= */}
       <section className="why-section">
         <h2>Why Choose Us</h2>
 
-        <div className="why-grid">
-
+        <div className="why-grid" ref={whyRef}>
           <div className="why-card">
             <h3>🚀 Fast Delivery</h3>
-            <p>We deliver high-quality projects within deadlines.</p>
+            <p>We deliver on time with quality.</p>
           </div>
 
           <div className="why-card">
-            <h3>💡 Modern Technology</h3>
-            <p>We use latest frameworks and tools for scalable solutions.</p>
+            <h3>💡 Modern Tech</h3>
+            <p>Latest tools and frameworks.</p>
           </div>
 
           <div className="why-card">
-            <h3>📊 Business Focused</h3>
-            <p>Every solution is designed to maximize business growth.</p>
+            <h3>📊 Business Focus</h3>
+            <p>We build for real growth.</p>
           </div>
-
         </div>
       </section>
 
-      {/* PROCESS */}
-      <section className="process">
+      {/* =========================
+          PROCESS
+      ========================= */}
+      <section className="process" ref={processRef}>
         <h2>How We Work</h2>
 
         <div className="process-grid">
@@ -121,13 +148,12 @@ function Services() {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="services-cta">
+      {/* =========================
+          CTA
+      ========================= */}
+      <section className="services-cta" ref={ctaRef}>
         <h2>Let’s Build Something Powerful</h2>
-        <p>
-          Partner with us to turn your ideas into scalable digital solutions
-          that grow your business.
-        </p>
+        <p>Turn your ideas into scalable digital solutions.</p>
 
         <button onClick={handleContact}>
           Contact Us

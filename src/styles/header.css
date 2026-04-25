@@ -1,31 +1,55 @@
 /* =========================
-   HEADER BASE
+   ROOT FIX (IMPORTANT)
+========================= */
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+/* =========================
+   HEADER (FORCE FIXED)
 ========================= */
 .header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+
+  height: 70px;
+
   display: flex;
   justify-content: space-between;
   align-items: center;
 
-  padding: 15px 30px;
+  padding: 0 25px;
+
   background: var(--header-bg);
   box-shadow: var(--shadow);
 
-  position: sticky;
-  top: 0;
-  z-index: 1100;
+  z-index: 999999;
+
+  backdrop-filter: blur(10px);
 }
 
-/* LOGO */
+/* =========================
+   BODY OFFSET (CRITICAL FIX)
+========================= */
+/* prevents content hiding under fixed header */
+body {
+  padding-top: 70px;
+}
+
+/* =========================
+   LOGO
+========================= */
 .header h1 {
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 700;
   letter-spacing: 1px;
 
   background: linear-gradient(90deg, var(--primary), var(--primary-dark));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-
-  text-transform: uppercase;
 }
 
 /* =========================
@@ -34,70 +58,81 @@
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 22px;
+  gap: 20px;
 }
 
 /* LINKS */
 .nav-links a,
-.dropdown span {
+.dropdown-title {
   text-decoration: none;
   color: var(--text-light);
   font-size: 15px;
   font-weight: 500;
-  cursor: pointer;
 
-  padding: 6px 10px;
-  border-radius: 6px;
-  transition: 0.2s;
+  padding: 8px 10px;
+  border-radius: 8px;
+
+  cursor: pointer;
+  transition: 0.2s ease;
 }
 
 .nav-links a:hover,
-.dropdown span:hover {
+.dropdown-title:hover {
   background: rgba(255,255,255,0.06);
   color: var(--primary);
 }
 
 /* =========================
-   DROPDOWN (DESKTOP)
+   DROPDOWN BASE
 ========================= */
 .dropdown {
   position: relative;
 }
 
+/* POPUP MENU (DESKTOP) */
 .dropdown-menu {
   position: absolute;
-  top: 38px;
+  top: 45px;
   left: 0;
 
-  min-width: 180px;
+  min-width: 200px;
+
   background: var(--dropdown-bg);
-  border-radius: 10px;
-  box-shadow: var(--shadow);
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+
+  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
 
   opacity: 0;
   visibility: hidden;
-  transform: translateY(10px);
-  transition: 0.25s ease;
+  transform: translateY(10px) scale(0.98);
 
-  z-index: 9999;
+  transition: all 0.25s ease;
+
+  z-index: 999999;
+  overflow: hidden;
 }
 
+/* OPEN STATE */
 .dropdown-menu.show {
   opacity: 1;
   visibility: visible;
-  transform: translateY(0);
+  transform: translateY(0) scale(1);
 }
 
+/* DROPDOWN LINKS */
 .dropdown-menu a {
   display: block;
-  padding: 10px 12px;
+  padding: 10px 14px;
+
   font-size: 14px;
   color: var(--text-muted);
-  border-radius: 6px;
+
+  transition: 0.2s ease;
 }
 
 .dropdown-menu a:hover {
-  background: var(--hover-bg);
+  background: rgba(255,255,255,0.05);
   color: var(--primary);
 }
 
@@ -105,26 +140,28 @@
    LOGIN BUTTON
 ========================= */
 .login-btn {
-  background: var(--primary-dark);
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
   color: white !important;
 
   padding: 8px 14px;
-  border-radius: 8px;
-  transition: 0.3s;
+  border-radius: 10px;
+
+  transition: 0.2s ease;
 }
 
 .login-btn:hover {
-  background: var(--primary);
+  transform: translateY(-2px);
 }
 
 /* =========================
-   HAMBURGER
+   MENU ICON
 ========================= */
 .menu-icon {
   display: none;
   font-size: 28px;
   cursor: pointer;
-  z-index: 1201;
+  color: var(--text-color);
+  z-index: 1000001;
 }
 
 /* =========================
@@ -133,14 +170,16 @@
 .menu-overlay {
   position: fixed;
   inset: 0;
+
   background: rgba(0,0,0,0.55);
   backdrop-filter: blur(4px);
 
   opacity: 0;
   visibility: hidden;
-  transition: 0.3s ease;
 
-  z-index: 900;
+  transition: 0.25s ease;
+
+  z-index: 999998;
 }
 
 .menu-overlay.active {
@@ -149,7 +188,7 @@
 }
 
 /* =========================
-   MOBILE MENU (PRO DRAWER)
+   MOBILE MENU DRAWER
 ========================= */
 @media (max-width: 768px) {
 
@@ -160,7 +199,7 @@
   .nav-links {
     position: fixed;
     top: 0;
-    right: -100%;
+    right: 0;
 
     width: 80%;
     max-width: 320px;
@@ -169,43 +208,55 @@
     background: var(--header-bg);
     box-shadow: -10px 0 30px rgba(0,0,0,0.3);
 
+    display: flex;
     flex-direction: column;
     align-items: flex-start;
 
     padding: 90px 20px;
     gap: 18px;
 
-    transition: right 0.35s ease;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
 
-    z-index: 1000;
+    z-index: 999999;
   }
 
   .nav-links.active {
-    right: 0;
+    transform: translateX(0);
   }
 
   .nav-links a,
-  .dropdown span {
+  .dropdown-title {
     width: 100%;
-    padding: 12px;
     font-size: 16px;
   }
 
-  .dropdown {
-    width: 100%;
-  }
-
+  /* =========================
+     MOBILE DROPDOWN (ACCORDION STYLE)
+  ========================= */
   .dropdown-menu {
     position: static;
+
     opacity: 1;
     visibility: visible;
     transform: none;
 
-    background: transparent;
-    box-shadow: none;
+    max-height: 0;
+    overflow: hidden;
 
-    padding-left: 12px;
-    margin-top: 6px;
+    border: none;
+    background: transparent;
+
+    transition: max-height 0.3s ease;
+    box-shadow: none;
+  }
+
+  .dropdown-menu.show {
+    max-height: 300px;
+  }
+
+  .dropdown-menu a {
+    padding-left: 20px;
   }
 
   .login-btn {
@@ -218,6 +269,10 @@
    SMALL MOBILE
 ========================= */
 @media (max-width: 480px) {
+  .header {
+    padding: 0 15px;
+  }
+
   .header h1 {
     font-size: 18px;
   }

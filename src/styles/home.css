@@ -324,15 +324,13 @@ button {
   .hero h1 {
     font-size: 2.2rem;
   }
-  @media (max-width: 768px) {
+
   .cta {
     padding: 60px 15px;
-
-    /* ✅ PERFECT SYMMETRY ON MOBILE */
     width: calc(100% - 30px);
     margin: 40px auto;
   }
-}
+
 
   .service-grid,
   .portfolio-grid,
@@ -371,4 +369,26 @@ button {
     width: 100%;
     max-width: 320px;
   }
+}
+/* =========================
+   HEADER FIX (DO NOT TOUCH UI)
+========================= */
+
+:root {
+  --header-height: 80px;
+}
+
+/* FORCE SPACE FOR FIXED HEADER */
+body {
+  padding-top: var(--header-height) !important;
+}
+
+/* ENSURE HEADER SIZE IS CONSISTENT */
+.header {
+  height: var(--header-height) !important;
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 999999;
 }
