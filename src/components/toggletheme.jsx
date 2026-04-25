@@ -8,7 +8,7 @@ function ToggleTheme() {
 
     return (
         <button onClick={toggleTheme} className="theme-btn">
-            Switch to {theme === "dark" ? "☀️ Light" : "🌙 Dark"} mode
+            Switch to {theme === "dark" ?  "🌙 Dark":"☀️ Light" } mode
         </button>
     )
 };

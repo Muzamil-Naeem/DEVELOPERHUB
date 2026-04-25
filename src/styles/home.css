@@ -60,9 +60,17 @@ section {
   margin: 18px auto 0;
 }
 
+
 /* =========================
    BUTTON SYSTEM
 ========================= */
+.hero-buttons {
+  margin-top: 30px;
+ display: grid;
+  justify-content: center;
+  gap: 20px;
+}
+
 button {
   font-family: inherit;
   cursor: pointer;
@@ -84,13 +92,12 @@ button {
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* ✅ CLEAN HOVER (NO BRIGHTNESS ISSUE) */
 .primary-btn:hover {
   transform: translateY(-2px);
   box-shadow: 0 12px 28px rgba(0, 198, 255, 0.3);
+  color: black;
 }
 
-/* CLICK */
 .primary-btn:active {
   transform: translateY(0);
 }
@@ -117,6 +124,25 @@ button {
 
 .secondary-btn:hover {
   background: rgba(0, 198, 255, 0.1);
+  transform: translateY(-2px);
+}
+.secondary-link-btn {
+  display: inline-block;
+  padding: 12px 26px;
+  border-radius: 10px;
+  font-weight: 600;
+
+  background: transparent;
+  border: 1px solid var(--primary);
+  color: var(--primary);
+
+  text-decoration: none;   /* removes underline */
+  cursor: pointer;
+
+  transition: all 0.25s ease;
+}
+.secondary-link-btn:hover {
+   background: rgba(0, 198, 255, 0.1);
   transform: translateY(-2px);
 }
 
@@ -322,5 +348,27 @@ button {
 
   .cta h2 {
     font-size: 1.6rem;
+  }
+}
+/* =========================
+   CONTACT FORM BUTTON FIX
+========================= */
+/* =========================
+   CONTACT BUTTON FIX (CLEAN)
+========================= */
+.contact-form .primary-btn {
+  width: 100%;
+  max-width: 260px;
+
+  display: block;
+  margin: 10px auto 0; /* ✅ THIS CENTERS IT ON DESKTOP */
+  text-align: center;
+}
+/* CENTER BUTTON ON MOBILE */
+@media (max-width: 640px) {
+  .contact-form .primary-btn {
+    align-self: center;
+    width: 100%;
+    max-width: 320px;
   }
 }

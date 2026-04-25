@@ -131,8 +131,8 @@ section h2 {
 /* CTA BUTTON */
 .primary-btn {
   margin-top: 25px;
-  background: #ffffff;
-  color: var(--primary);
+  background: #f1f5f9;
+  color: var(--primary-dark);
   padding: 12px 26px;
   border-radius: 10px;
   font-weight: 600;
