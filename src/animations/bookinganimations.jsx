@@ -3,7 +3,6 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-/* HERO */
 export const bookingHeroAnim = (el) => {
   if (!el) return;
 
@@ -16,7 +15,6 @@ export const bookingHeroAnim = (el) => {
   });
 };
 
-/* FORM */
 export const bookingFormAnim = (el) => {
   if (!el) return;
 
@@ -24,7 +22,7 @@ export const bookingFormAnim = (el) => {
     scrollTrigger: {
       trigger: el,
       start: "top 85%",
-      toggleActions: "play reset play reset",
+      toggleActions: "restart none none reset",
     },
     opacity: 0,
     y: 50,
@@ -33,7 +31,7 @@ export const bookingFormAnim = (el) => {
   });
 };
 
-/* FIELDS */
+
 export const bookingFieldsAnim = (fields) => {
   if (!fields?.length) return;
 
@@ -41,7 +39,7 @@ export const bookingFieldsAnim = (fields) => {
     scrollTrigger: {
       trigger: ".booking-form",
       start: "top 85%",
-      toggleActions: "play reset play reset",
+      toggleActions: "restart none none reset",
     },
     opacity: 0,
     y: 30,
@@ -51,7 +49,6 @@ export const bookingFieldsAnim = (fields) => {
   });
 };
 
-/* BOOKINGS CARDS */
 export const bookingCardsAnim = (cards) => {
   if (!cards?.length) return;
 
@@ -59,7 +56,7 @@ export const bookingCardsAnim = (cards) => {
     scrollTrigger: {
       trigger: ".upcoming",
       start: "top 85%",
-      toggleActions: "play reset play reset",
+      toggleActions: "restart none none reset",
     },
     opacity: 0,
     x: -40,
@@ -68,7 +65,6 @@ export const bookingCardsAnim = (cards) => {
   });
 };
 
-/* INFO SECTION */
 export const bookingInfoAnim = (el) => {
   if (!el) return;
 
@@ -76,7 +72,7 @@ export const bookingInfoAnim = (el) => {
     scrollTrigger: {
       trigger: ".booking-info",
       start: "top 85%",
-      toggleActions: "play reset play reset",
+      toggleActions: "restart none none reset",
     },
     opacity: 0,
     y: 40,

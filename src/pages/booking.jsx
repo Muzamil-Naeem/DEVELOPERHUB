@@ -1,7 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "../styles/booking.css";
 import Swal from "sweetalert2";
-import { useEffect, useRef } from "react";
+import { auth, db } from "../firebase";
+import { onAuthStateChanged } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
+import {
+  collection,
+  addDoc,
+  getDocs,
+  query,
+  where,
+  deleteDoc,
+  doc
+} from "firebase/firestore";
+
 import {
   bookingHeroAnim,
   bookingFormAnim,
@@ -11,17 +23,34 @@ import {
 } from "../animations/bookingAnimations";
 
 function Booking() {
+  const navigate = useNavigate();
+  const [user, setUser] = useState(null);
+
   const heroRef = useRef(null);
-const formRef = useRef(null);
-const fieldRefs = useRef([]);
-const infoRef = useRef(null);
-useEffect(() => {
-  bookingHeroAnim(heroRef.current);
-  bookingFormAnim(formRef.current);
-  bookingFieldsAnim(fieldRefs.current);
-  bookingCardsAnim(document.querySelectorAll(".booking-card"));
-  bookingInfoAnim(infoRef.current);
-}, []);
+  const formRef = useRef(null);
+  const fieldRefs = useRef([]);
+  const infoRef = useRef(null);
+
+  useEffect(() => {
+    bookingHeroAnim(heroRef.current);
+    bookingFormAnim(formRef.current);
+    bookingFieldsAnim(fieldRefs.current);
+    bookingCardsAnim(document.querySelectorAll(".booking-card"));
+    bookingInfoAnim(infoRef.current);
+  }, []);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      if (!currentUser) {
+        navigate("/login");
+      } else {
+        setUser(currentUser);
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
+
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
@@ -36,13 +65,29 @@ useEffect(() => {
     projectDetails: ""
   });
 
-  const [booking, setBooking] = useState(() => {
-  const saved = localStorage.getItem("bookings");
-  return saved ? JSON.parse(saved) : [];
-});
-useEffect(() => {
-  localStorage.setItem("bookings", JSON.stringify(booking));
-}, [booking]);
+  const [booking, setBooking] = useState([]);
+
+  useEffect(() => {
+    if (!user) return;
+
+    const fetchBookings = async () => {
+      const q = query(
+        collection(db, "bookings"),
+        where("userId", "==", user.uid)
+      );
+
+      const snapshot = await getDocs(q);
+
+      const data = snapshot.docs.map((d) => ({
+        id: d.id,
+        ...d.data()
+      }));
+
+      setBooking(data);
+    };
+
+    fetchBookings();
+  }, [user]);
 
   const handleChange = (e) => {
     setFormData({
@@ -50,7 +95,6 @@ useEffect(() => {
       [e.target.name]: e.target.value
     });
 
-    // clear field error while typing
     setErrors((prev) => ({
       ...prev,
       [e.target.name]: ""
@@ -59,15 +103,23 @@ useEffect(() => {
     setSubmitted(false);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (!user) {
+      Swal.fire({
+        icon: "error",
+        title: "Access Denied",
+        text: "Please login to book a meeting"
+      });
+      return;
+    }
     setSubmitted(true);
     setLoading(true);
 
     let newErrors = {};
 
-    // ---------------- VALIDATION ----------------
+   
     if (!formData.name) newErrors.name = "Name is required.";
     if (!formData.email) newErrors.email = "Email is required.";
     if (!formData.date) newErrors.date = "Date is required.";
@@ -77,40 +129,32 @@ useEffect(() => {
     if (!formData.meetingType)
       newErrors.meetingType = "Please select a meeting type.";
 
-    // ---------------- DATE/TIME CHECK ----------------
+  
     if (formData.date && formData.time) {
-      const selectedDateTime = new Date(
-        `${formData.date}T${formData.time}`
-      );
+      const selectedDateTime = new Date(`${formData.date}T${formData.time}`);
       const now = new Date();
 
       if (selectedDateTime < now) {
-        const today = new Date();
-
-        if (
-          new Date(formData.date).toDateString() ===
-          today.toDateString()
-        ) {
-          newErrors.time = "Please select a future time slot.";
-        } else {
-          newErrors.date = "Please select a future date.";
-        }
+        newErrors.time = "Please select a future time slot.";
       }
     }
 
-    // ❌ STOP IF ERRORS EXIST
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       setLoading(false);
       return;
     }
 
-    // ---------------- DUPLICATE CHECK ----------------
-    const exist = booking.find(
-      (b) => b.date === formData.date && b.time === formData.time
+
+    const q = query(
+      collection(db, "bookings"),
+      where("date", "==", formData.date),
+      where("time", "==", formData.time),
+      where("userId", "==", user.uid)
     );
 
-    if (exist) {
+    const snapshot = await getDocs(q);
+    if (!snapshot.empty) {
       setErrors({
         time: "This slot is already booked. Please choose another time."
       });
@@ -118,55 +162,72 @@ useEffect(() => {
       return;
     }
 
-    // ---------------- SUCCESS ----------------
     setErrors({});
 
-    const newBooking = {
-      id: Date.now(),
-      ...formData
-    };
+    await addDoc(collection(db, "bookings"), {
+      userId: user.uid,
+      name: formData.name,
+      email: formData.email,
+      phone: formData.phone,
+      meetingType: formData.meetingType,
+      date: formData.date,
+      time: formData.time,
+      projectDetails: formData.projectDetails
+    });
 
-    setBooking([...booking, newBooking]);
+    setLoading(false);
 
-    setTimeout(() => {
-      Swal.fire({
-        title: "Success!",
-        text: "Your meeting has been booked successfully!",
-        icon: "success"
-      });
+    Swal.fire({
+      title: "Success!",
+      text: "Your meeting has been booked successfully!",
+      icon: "success"
+    });
 
-      setLoading(false);
+    setFormData({
+      name: "",
+      email: "",
+      phone: "",
+      meetingType: "",
+      date: "",
+      time: "",
+      projectDetails: ""
+    });
 
-      setFormData({
-        name: "",
-        email: "",
-        phone: "",
-        meetingType: "",
-        date: "",
-        time: "",
-        projectDetails: ""
-      });
-    }, 600);
+    const updated = await getDocs(
+      query(collection(db, "bookings"), where("userId", "==", user.uid))
+    );
+
+    setBooking(
+      updated.docs.map((d) => ({
+        id: d.id,
+        ...d.data()
+      }))
+    );
   };
 
-  const handleCancel = (id) => {
-    const newBooking = booking.filter((b) => b.id !== id);
-    setBooking(newBooking);
+  const handleCancel = async (id) => {
+    await deleteDoc(doc(db, "bookings", id));
+    setBooking((prev) => prev.filter((b) => b.id !== id));
+     Swal.fire({
+      title: "Success!",
+      text: "Booking has been cancelled successfully!",
+      icon: "success"
+    });
   };
 
   return (
     <div className="booking-page">
 
-      {/* HERO */}
       <section className="booking-hero" ref={heroRef}>
         <h1>Schedule a Meeting</h1>
         <p>
           Book a consultation with our team to discuss your project ideas,
           requirements, and how we can help you build scalable digital solutions.
         </p>
+
+    
       </section>
 
-      {/* FORM */}
       <section className="booking-section">
         <h2>Meeting Details</h2>
 
@@ -180,9 +241,7 @@ useEffect(() => {
               onChange={handleChange}
               placeholder="Full Name"
             />
-            {submitted && errors.name && (
-              <p className="error error-animate">{errors.name}</p>
-            )}
+            {submitted && errors.name && <p className="error">{errors.name}</p>}
           </div>
 
           <div className="field" ref={(el) => fieldRefs.current[1] = el}>
@@ -193,9 +252,7 @@ useEffect(() => {
               onChange={handleChange}
               placeholder="Email Address"
             />
-            {submitted && errors.email && (
-              <p className="error error-animate">{errors.email}</p>
-            )}
+            {submitted && errors.email && <p className="error">{errors.email}</p>}
           </div>
 
           <div className="field" ref={(el) => fieldRefs.current[2] = el}>
@@ -222,9 +279,7 @@ useEffect(() => {
             </select>
 
             {submitted && errors.meetingType && (
-              <p className="error error-animate">
-                {errors.meetingType}
-              </p>
+              <p className="error">{errors.meetingType}</p>
             )}
           </div>
 
@@ -236,9 +291,7 @@ useEffect(() => {
               onChange={handleChange}
               min={new Date().toISOString().split("T")[0]}
             />
-            {submitted && errors.date && (
-              <p className="error error-animate">{errors.date}</p>
-            )}
+            {submitted && errors.date && <p className="error">{errors.date}</p>}
           </div>
 
           <div className="field" ref={(el) => fieldRefs.current[5] = el}>
@@ -248,9 +301,7 @@ useEffect(() => {
               value={formData.time}
               onChange={handleChange}
             />
-            {submitted && errors.time && (
-              <p className="error error-animate">{errors.time}</p>
-            )}
+            {submitted && errors.time && <p className="error">{errors.time}</p>}
           </div>
 
           <div className="field" ref={(el) => fieldRefs.current[6] = el}>
@@ -261,9 +312,7 @@ useEffect(() => {
               placeholder="Tell us about your project..."
             />
             {submitted && errors.projectDetails && (
-              <p className="error error-animate">
-                {errors.projectDetails}
-              </p>
+              <p className="error">{errors.projectDetails}</p>
             )}
           </div>
 
@@ -271,45 +320,15 @@ useEffect(() => {
             {loading ? "Booking..." : "Confirm Booking"}
           </button>
         </form>
-
-        {/* BOOKINGS */}
         <h3 className="upcoming">Upcoming Bookings</h3>
-
         {booking.map((b) => (
           <div key={b.id} className="booking-card">
-            <p>
-              {b.name} - {b.date} at {b.time}
-            </p>
-            <button
-              className="cancel"
-              onClick={() => handleCancel(b.id)}
-            >
+            <p>{b.name} - {b.date} at {b.time}</p>
+            <button className="cancel" onClick={() => handleCancel(b.id)}>
               Cancel Booking
             </button>
           </div>
         ))}
-      </section>
-
-      {/* INFO */}
-      <section className="booking-info" ref={infoRef}>
-        <h2>What Happens Next?</h2>
-
-        <div className="info-grid">
-          <div className="info-card">
-            <h3>📩 Confirmation</h3>
-            <p>You will receive a confirmation email after booking.</p>
-          </div>
-
-          <div className="info-card">
-            <h3>📞 Consultation</h3>
-            <p>Our team will connect with you at the scheduled time.</p>
-          </div>
-
-          <div className="info-card">
-            <h3>🚀 Execution Plan</h3>
-            <p>We discuss your goals and create a clear roadmap.</p>
-          </div>
-        </div>
       </section>
 
     </div>

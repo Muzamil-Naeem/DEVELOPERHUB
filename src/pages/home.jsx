@@ -35,9 +35,7 @@ useEffect(() => {
   cardsStagger(statsRef.current);
   cardsStagger(processRef.current);
   cardsStagger(portfolioRef.current);
-
   ctaBlock(ctaRef.current);
-
   contactForm(contactSectionRef.current);
   formFields(formRef.current);
 }, []);
@@ -94,8 +92,6 @@ useEffect(() => {
 
   return (
     <div className="home">
-
-      {/* HERO */}
       <section className="hero">
         <div className="hero-content">
 
@@ -127,7 +123,6 @@ useEffect(() => {
         </div>
       </section>
 
-      {/* VALUE SECTION */}
       <section className="value " ref={valueRef}>
         <h2>Why Businesses Choose Us</h2>
         <p className="section-subtitle">
@@ -160,7 +155,6 @@ useEffect(() => {
         </div>
       </section>
 
-      {/* STATS */}
       <section className="stats">
         <h2>Proven Results</h2>
 
@@ -172,7 +166,6 @@ useEffect(() => {
         </div>
       </section>
 
-      {/* SERVICES */}
       <section className="services" >
         <h2>Our Expertise</h2>
         <p className="section-subtitle">
@@ -225,8 +218,6 @@ useEffect(() => {
 
         </div>
       </section>
-
-      {/* PROCESS */}
       <section className="process">
         <h2>How We Build Products</h2>
 
@@ -263,7 +254,6 @@ useEffect(() => {
         </div>
       </section>
 
-      {/* PORTFOLIO */}
       <section className="portfolio">
         <h2>Real Projects We’ve Built</h2>
 
@@ -276,8 +266,6 @@ useEffect(() => {
           <div className="project">CRM Automation Tool</div>
         </div>
       </section>
-
-      {/* CTA */}
       <section className="cta" ref={ctaRef}>
         <h2>Have an Idea? Let’s Turn It Into Reality</h2>
         <p>
@@ -289,7 +277,6 @@ useEffect(() => {
         </button>
       </section>
 
-      {/* CONTACT */}
       <section className="contact" ref={contactSectionRef}>
         <h2>Let’s Talk</h2>
 

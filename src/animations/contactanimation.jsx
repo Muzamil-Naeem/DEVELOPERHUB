@@ -3,70 +3,81 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-// ================= HERO =================
 export const contactHeroAnim = (hero) => {
   if (!hero) return;
 
-  gsap.from(hero.children, {
-    opacity: 0,
-    y: 60,
-    duration: 1,
-    stagger: 0.2,
-    ease: "power3.out"
-  });
+  gsap.fromTo(
+    hero.children,
+    { opacity: 0, y: 60 },
+    {
+      opacity: 1,
+      y: 0,
+      duration: 0.9,
+      stagger: 0.2,
+      ease: "power3.out",
+      toggleActions: "restart none none reset"
+    }
+  );
 };
 
-// ================= INFO =================
 export const contactInfoAnim = (cards) => {
   if (!cards || cards.length === 0) return;
 
-  gsap.from(cards, {
-    scrollTrigger: {
-      trigger: cards[0].parentElement, // ✅ FIXED
-      start: "top 80%",
-      toggleActions: "play none none reverse"
-    },
-    opacity: 0,
-    y: 50,
-    scale: 0.95,
-    duration: 0.8,
-    stagger: 0.15,
-    ease: "power3.out"
-  });
+  gsap.fromTo(
+    cards,
+    { opacity: 0, y: 40, scale: 0.95 },
+    {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      duration: 0.8,
+      stagger: 0.15,
+      ease: "power3.out",
+      scrollTrigger: {
+        trigger: cards[0],
+        start: "top 85%",
+        toggleActions: "restart none none reset"
+      }
+    }
+  );
 };
 
-// ================= FORM =================
 export const contactFormAnim = (form) => {
   if (!form) return;
 
-  gsap.from(form.children, {
-    scrollTrigger: {
-      trigger: form,
-      start: "top 80%",
-      toggleActions: "play none none reverse"
-    },
-    opacity: 0,
-    x: -40,
-    duration: 0.8,
-    stagger: 0.1,
-    ease: "power3.out"
-  });
+  gsap.fromTo(
+    form.children,
+    { opacity: 0, x: -40 },
+    {
+      opacity: 1,
+      x: 0,
+      duration: 0.8,
+      stagger: 0.1,
+      scrollTrigger: {
+        trigger: form,
+        start: "top 85%",
+        toggleActions: "restart none none reset"
+      }
+    }
+  );
 };
 
-// ================= FAQ =================
 export const contactFaqAnim = (items) => {
   if (!items || items.length === 0) return;
 
-  gsap.from(items, {
-    scrollTrigger: {
-      trigger: items[0].parentElement, // ✅ FIXED
-      start: "top 85%",
-      toggleActions: "play none none reverse"
-    },
-    opacity: 0,
-    y: 30,
-    duration: 0.7,
-    stagger: 0.2,
-    ease: "power2.out"
-  });
+  gsap.fromTo(
+    items,
+    { opacity: 0, y: 30 },
+    {
+      opacity: 1,
+      y: 0,
+      duration: 0.7,
+      stagger: 0.2,
+      scrollTrigger: {
+        trigger: items[0],
+        start: "top 90%",
+        toggleActions: "restart none none reset"
+      }
+    }
+  );
 };

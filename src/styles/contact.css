@@ -1,6 +1,3 @@
-/* =========================
-   RESET + BASE
-========================= */
 
 * {
   box-sizing: border-box;
@@ -18,29 +15,16 @@ body {
   overflow-x: hidden;
 }
 
-/* =========================
-   CONTACT PAGE WRAPPER
-   (ONLY THIS PAGE FIX AREA)
-========================= */
-
 .contact-page {
   width: 100%;
   min-height: 100vh;
-
-  /* 🔥 FIX: remove extra top gap */
   padding: 20px 20px 60px;
-
   position: relative;
 }
 
-/* GSAP safe */
 .contact-page * {
   will-change: auto;
 }
-
-/* =========================
-   GLOBAL SECTION LAYOUT
-========================= */
 
 section {
   width: 100%;
@@ -52,14 +36,8 @@ section {
   margin: 0 auto;
 }
 
-/* =========================
-   HERO
-========================= */
-
 .contact-hero {
   text-align: center;
-
-  /* 🔥 FIX: remove extra push from top */
   padding-top: 0;
   margin-top: 0;
 }
@@ -82,10 +60,6 @@ section {
   font-size: 15px;
 }
 
-/* =========================
-   HERO TAGS
-========================= */
-
 .hero-tags {
   margin-top: 18px;
   display: flex;
@@ -103,10 +77,6 @@ section {
   border: 1px solid var(--border-light);
   color: var(--text-muted);
 }
-
-/* =========================
-   INFO SECTION
-========================= */
 
 .contact-info {
   text-align: center;
@@ -139,10 +109,6 @@ section {
   margin-bottom: 8px;
 }
 
-/* =========================
-   FORM SECTION
-========================= */
-
 .contact-form-section {
   margin-top: 20px;
   padding: 35px;
@@ -159,14 +125,12 @@ section {
   margin-bottom: 20px;
 }
 
-/* FORM */
 .contact-form {
   display: flex;
   flex-direction: column;
   gap: 14px;
 }
 
-/* INPUTS */
 .contact-form input,
 .contact-form textarea {
   width: 100%;
@@ -188,7 +152,6 @@ section {
   box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
 }
 
-/* ERROR */
 .error-input {
   border-color: #ef4444 !important;
 }
@@ -198,10 +161,6 @@ section {
   color: #f87171;
   margin-top: -6px;
 }
-
-/* =========================
-   BUTTON
-========================= */
 
 .primary-btn {
   padding: 14px;
@@ -225,7 +184,6 @@ section {
   cursor: not-allowed;
 }
 
-/* loader */
 .loader {
   width: 18px;
   height: 18px;
@@ -241,10 +199,6 @@ section {
     transform: rotate(360deg);
   }
 }
-
-/* =========================
-   FAQ
-========================= */
 
 .contact-faq {
   margin-top: 30px;
@@ -270,10 +224,6 @@ section {
   color: var(--primary);
   margin-bottom: 5px;
 }
-
-/* =========================
-   RESPONSIVE
-========================= */
 
 @media (max-width: 1024px) {
   .info-grid {

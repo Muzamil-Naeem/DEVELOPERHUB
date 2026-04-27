@@ -1,6 +1,4 @@
-/* =========================
-   BASE RESET
-========================= */
+
 * {
   box-sizing: border-box;
 }
@@ -25,18 +23,18 @@ h1, h2, h3, p {
 section {
   padding: 100px 20px;
 }
+.section-subtitle {
+  color: var(--text-secondary);
+  margin-top: 8px;
+  padding-bottom: 40px;
+  font-size: 1.1rem;
+}
 
-/* =========================
-   GLOBAL CONTAINER
-========================= */
 .container {
   max-width: 1200px;
   margin: 0 auto;
 }
 
-/* =========================
-   HERO
-========================= */
 .hero {
   min-height: 92vh;
   display: flex;
@@ -60,10 +58,6 @@ section {
   margin: 18px auto 0;
 }
 
-
-/* =========================
-   BUTTON SYSTEM
-========================= */
 .hero-buttons {
   margin-top: 30px;
  display: grid;
@@ -77,18 +71,14 @@ button {
   border: none;
 }
 
-/* PRIMARY BUTTON */
 .primary-btn {
   padding: 12px 26px;
   border-radius: 10px;
   font-weight: 600;
   font-size: 15px;
-
   color: #fff;
   background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-
   box-shadow: 0 8px 20px rgba(0, 198, 255, 0.25);
-
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
@@ -102,14 +92,12 @@ button {
   transform: translateY(0);
 }
 
-/* DISABLED */
 .primary-btn:disabled {
   opacity: 0.7;
   cursor: not-allowed;
   box-shadow: none;
 }
 
-/* SECONDARY BUTTON */
 .secondary-btn {
   padding: 12px 26px;
   border-radius: 10px;
@@ -135,10 +123,8 @@ button {
   background: transparent;
   border: 1px solid var(--primary);
   color: var(--primary);
-
-  text-decoration: none;   /* removes underline */
+  text-decoration: none; 
   cursor: pointer;
-
   transition: all 0.25s ease;
 }
 .secondary-link-btn:hover {
@@ -146,9 +132,6 @@ button {
   transform: translateY(-2px);
 }
 
-/* =========================
-   GRID SYSTEMS
-========================= */
 .service-grid,
 .portfolio-grid,
 .testimonial-grid,
@@ -157,9 +140,6 @@ button {
   gap: 25px;
 }
 
-/* =========================
-   CARDS
-========================= */
 .card,
 .project,
 .testimonial,
@@ -178,9 +158,6 @@ button {
   background: var(--card-hover);
 }
 
-/* =========================
-   TECH TAGS
-========================= */
 .tech-list {
   display: flex;
   flex-wrap: wrap;
@@ -204,9 +181,6 @@ button {
   color: var(--primary);
 }
 
-/* =========================
-   CONTACT FORM
-========================= */
 .contact-form {
   max-width: 520px;
   margin: auto;
@@ -241,26 +215,15 @@ button {
   resize: vertical;
 }
 
-/* =========================
-   CTA (FIXED)
-========================= */
-/* =========================
-   CTA (PERFECT CENTER FIX)
-========================= */
 .cta {
   background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-
   padding: 80px 20px;
   border-radius: 18px;
-
   text-align: center;
   color: white;
-
   box-shadow: 0 20px 50px rgba(0, 198, 255, 0.25);
-
-  /* ✅ FIX */
   max-width: 1100px;
-  width: calc(100% - 40px); /* ensures equal left/right space */
+  width: calc(100% - 40px);
   margin: 60px auto;
 }
 .cta h2 {
@@ -273,7 +236,6 @@ button {
   opacity: 0.9;
 }
 
-/* CTA BUTTON */
 .cta .primary-btn {
   background: #fff;
   color: #0f172a;
@@ -286,9 +248,6 @@ button {
   transform: translateY(-2px);
 }
 
-/* =========================
-   LOADER
-========================= */
 .loader {
   border: 3px solid rgba(255,255,255,0.2);
   border-top: 3px solid var(--primary);
@@ -304,9 +263,6 @@ button {
   }
 }
 
-/* =========================
-   RESPONSIVE
-========================= */
 @media (max-width: 1024px) {
   .service-grid,
   .portfolio-grid,
@@ -348,18 +304,13 @@ button {
     font-size: 1.6rem;
   }
 }
-/* =========================
-   CONTACT FORM BUTTON FIX
-========================= */
-/* =========================
-   CONTACT BUTTON FIX (CLEAN)
-========================= */
+
 .contact-form .primary-btn {
   width: 100%;
   max-width: 260px;
 
   display: block;
-  margin: 10px auto 0; /* ✅ THIS CENTERS IT ON DESKTOP */
+  margin: 10px auto 0;
   text-align: center;
 }
 /* CENTER BUTTON ON MOBILE */
@@ -370,20 +321,15 @@ button {
     max-width: 320px;
   }
 }
-/* =========================
-   HEADER FIX (DO NOT TOUCH UI)
-========================= */
 
 :root {
   --header-height: 80px;
 }
 
-/* FORCE SPACE FOR FIXED HEADER */
 body {
   padding-top: var(--header-height) !important;
 }
 
-/* ENSURE HEADER SIZE IS CONSISTENT */
 .header {
   height: var(--header-height) !important;
   position: fixed !important;

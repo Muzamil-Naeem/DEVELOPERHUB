@@ -3,9 +3,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-/* =========================
-   HERO (CINEMATIC TIMELINE)
-========================= */
+
 export const homeHero = (title, text, buttons) => {
   const tl = gsap.timeline();
 
@@ -43,9 +41,7 @@ export const homeHero = (title, text, buttons) => {
   return tl;
 };
 
-/* =========================
-   SECTION TITLE (PREMIUM REVEAL)
-========================= */
+
 export const sectionTitle = (el) => {
   return gsap.from(el, {
     opacity: 0,
@@ -62,9 +58,7 @@ export const sectionTitle = (el) => {
   });
 };
 
-/* =========================
-   CARDS (MODERN STAGGER GRID)
-========================= */
+
 export const cardsStagger = (el) => {
   return gsap.from(el, {
     opacity: 0,
@@ -85,9 +79,7 @@ export const cardsStagger = (el) => {
   });
 };
 
-/* =========================
-   PARALLAX BACKGROUND
-========================= */
+
 export const parallax = (el) => {
   return gsap.to(el, {
     y: 150,
@@ -102,9 +94,7 @@ export const parallax = (el) => {
   });
 };
 
-/* =========================
-   CTA BLOCK (FOCUS IMPACT)
-========================= */
+
 export const ctaBlock = (el) => {
   return gsap.from(el, {
     opacity: 0,
@@ -120,9 +110,7 @@ export const ctaBlock = (el) => {
   });
 };
 
-/* =========================
-   CONTACT FORM (SMOOTH BUILD)
-========================= */
+
 export const contactForm = (el) => {
   return gsap.from(el, {
     opacity: 0,

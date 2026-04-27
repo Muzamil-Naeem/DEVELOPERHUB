@@ -1,9 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "../styles/contact.css";
 import emailjs from "@emailjs/browser";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Swal from "sweetalert2";
+
+import {
+  contactHeroAnim,
+  contactInfoAnim,
+  contactFormAnim,
+  contactFaqAnim
+} from "../animations/contactanimation";
 
 function Contact() {
   const [loading, setLoading] = useState(false);
@@ -16,6 +23,18 @@ function Contact() {
     subject: "",
     message: ""
   });
+
+  const heroRef = useRef(null);
+  const infoRef = useRef([]);
+  const formRef = useRef(null);
+  const faqRef = useRef([]);
+
+  useEffect(() => {
+    contactHeroAnim(heroRef.current);
+    contactInfoAnim(infoRef.current);
+    contactFormAnim(formRef.current);
+    contactFaqAnim(faqRef.current);
+  }, []);
 
   function handleChange(e) {
     setFormData({
@@ -108,8 +127,7 @@ function Contact() {
     <div className="contact-page">
       <ToastContainer />
 
-      {/* ================= HERO ================= */}
-      <section className="contact-hero">
+      <section className="contact-hero" ref={heroRef}>
         <h1>Let’s Build Something Great Together</h1>
 
         <p>
@@ -124,33 +142,44 @@ function Contact() {
         </div>
       </section>
 
-      {/* ================= TRUST / INFO ================= */}
       <section className="contact-info">
         <h2>Why Contact Us?</h2>
 
         <div className="info-grid">
-          <div className="info-card">
+          <div
+            className="info-card"
+            ref={(el) => (infoRef.current[0] = el)}
+          >
             <h3>🚀 Project Support</h3>
             <p>We help turn your ideas into real working products.</p>
           </div>
 
-          <div className="info-card">
+          <div
+            className="info-card"
+            ref={(el) => (infoRef.current[1] = el)}
+          >
             <h3>💡 Technical Guidance</h3>
             <p>Get help with frontend, backend, or full-stack issues.</p>
           </div>
 
-          <div className="info-card">
+          <div
+            className="info-card"
+            ref={(el) => (infoRef.current[2] = el)}
+          >
             <h3>🤝 Collaboration</h3>
             <p>We love working with developers & startups worldwide.</p>
           </div>
         </div>
       </section>
 
-      {/* ================= FORM ================= */}
       <section className="contact-form-section">
         <h2>Send Us a Message</h2>
 
-        <form className="contact-form" onSubmit={handleSubmit}>
+        <form
+          className="contact-form"
+          onSubmit={handleSubmit}
+          ref={formRef}
+        >
           <input
             type="text"
             name="name"
@@ -202,22 +231,29 @@ function Contact() {
           </button>
         </form>
       </section>
-
-      {/* ================= FAQ (VERY IMPORTANT FOR PROFESSIONAL LOOK) ================= */}
       <section className="contact-faq">
         <h2>Frequently Asked Questions</h2>
 
-        <div className="faq-item">
+        <div
+          className="faq-item"
+          ref={(el) => (faqRef.current[0] = el)}
+        >
           <h4>How fast do you respond?</h4>
           <p>Usually within 24 hours or less.</p>
         </div>
 
-        <div className="faq-item">
+        <div
+          className="faq-item"
+          ref={(el) => (faqRef.current[1] = el)}
+        >
           <h4>Do you accept freelance work?</h4>
           <p>Yes, we are open to collaboration and freelance projects.</p>
         </div>
 
-        <div className="faq-item">
+        <div
+          className="faq-item"
+          ref={(el) => (faqRef.current[2] = el)}
+        >
           <h4>Can I discuss ideas before starting?</h4>
           <p>Of course — we encourage idea discussions first.</p>
         </div>

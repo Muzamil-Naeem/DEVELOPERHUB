@@ -18,34 +18,24 @@ gsap.registerPlugin(ScrollTrigger);
 function Services() {
   const navigate = useNavigate();
 
-  /* =========================
-     REFS (CLEAN + STABLE)
-  ========================= */
   const heroRef = useRef(null);
   const servicesRef = useRef(null);
   const whyRef = useRef(null);
   const processRef = useRef(null);
   const ctaRef = useRef(null);
 
-  /* =========================
-     GSAP INIT (FIXED)
-  ========================= */
   useEffect(() => {
-    // HERO
+  
     animateServicesHero(heroRef.current);
-
-    // SECTIONS
     animateServiceCards(servicesRef.current);
     animateWhyCards(whyRef.current);
     animateProcess(processRef.current);
     animateCTA(ctaRef.current);
 
-    // FORCE REFRESH (IMPORTANT)
     const timer = setTimeout(() => {
       ScrollTrigger.refresh();
     }, 300);
 
-    // CLEANUP (VERY IMPORTANT)
     return () => {
       clearTimeout(timer);
       ScrollTrigger.getAll().forEach((t) => t.kill());
@@ -60,9 +50,6 @@ function Services() {
   return (
     <div className="services-page">
 
-      {/* =========================
-          HERO
-      ========================= */}
       <section className="services-hero" ref={heroRef}>
         <h1>Our Services</h1>
         <p>
@@ -71,9 +58,6 @@ function Services() {
         </p>
       </section>
 
-      {/* =========================
-          SERVICES
-      ========================= */}
       <section className="services-grid-section">
         <h2>What We Offer</h2>
 
@@ -110,9 +94,6 @@ function Services() {
         </div>
       </section>
 
-      {/* =========================
-          WHY CHOOSE US
-      ========================= */}
       <section className="why-section">
         <h2>Why Choose Us</h2>
 
@@ -134,9 +115,6 @@ function Services() {
         </div>
       </section>
 
-      {/* =========================
-          PROCESS
-      ========================= */}
       <section className="process" ref={processRef}>
         <h2>How We Work</h2>
 
@@ -148,9 +126,6 @@ function Services() {
         </div>
       </section>
 
-      {/* =========================
-          CTA
-      ========================= */}
       <section className="services-cta" ref={ctaRef}>
         <h2>Let’s Build Something Powerful</h2>
         <p>Turn your ideas into scalable digital solutions.</p>

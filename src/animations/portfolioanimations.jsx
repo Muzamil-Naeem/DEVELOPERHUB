@@ -3,7 +3,6 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-// HERO
 export const animatePortfolioHero = (el) => {
   if (!el) return;
 
@@ -16,7 +15,7 @@ export const animatePortfolioHero = (el) => {
   });
 };
 
-// PROJECT CARDS (IMPORTANT: works every scroll revisit)
+
 export const animateProjectCards = (cards) => {
   if (!cards || cards.length === 0) return;
 
@@ -25,7 +24,7 @@ export const animateProjectCards = (cards) => {
       trigger: ".projects",
       start: "top 85%",
       end: "bottom 20%",
-      toggleActions: "restart none restart none", // 🔥 REPEATS ON SCROLL UP/DOWN
+      toggleActions: "restart none restart none", 
     },
     opacity: 0,
     y: 60,
@@ -36,7 +35,7 @@ export const animateProjectCards = (cards) => {
   });
 };
 
-// FILTER BAR
+
 export const animateFilterBar = (el) => {
   if (!el) return;
 
@@ -53,7 +52,6 @@ export const animateFilterBar = (el) => {
   });
 };
 
-// EXPERTISE
 export const animateExpertise = (cards) => {
   if (!cards || cards.length === 0) return;
 
@@ -70,7 +68,6 @@ export const animateExpertise = (cards) => {
   });
 };
 
-// IMPACT
 export const animateImpact = (items) => {
   if (!items || items.length === 0) return;
 
@@ -87,7 +84,7 @@ export const animateImpact = (items) => {
   });
 };
 
-// PROCESS
+
 export const animateProcess = (items) => {
   if (!items || items.length === 0) return;
 
@@ -104,7 +101,7 @@ export const animateProcess = (items) => {
   });
 };
 
-// CTA
+
 export const animatePortfolioCTA = (el) => {
   if (!el) return;
 

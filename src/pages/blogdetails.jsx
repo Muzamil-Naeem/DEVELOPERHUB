@@ -22,7 +22,7 @@ Companies are using AI to:
 
 From chatbots to recommendation engines, AI is helping businesses scale faster while reducing costs.
       `
-    },
+      },
 
     "web-trends": {
       title: "Modern Web Development Trends",

@@ -3,9 +3,6 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-/* =========================
-   HERO (ONLY ON LOAD)
-========================= */
 export const animateServicesHero = (el) => {
   if (!el) return;
 
@@ -18,9 +15,6 @@ export const animateServicesHero = (el) => {
   });
 };
 
-/* =========================
-   WHAT WE OFFER (REPEAT ANIMATION)
-========================= */
 export const animateServiceCards = (container) => {
   if (!container) return;
 
@@ -39,16 +33,13 @@ export const animateServiceCards = (container) => {
         trigger: container,
         start: "top 80%",
         end: "bottom 20%",
-         toggleActions: "restart none none reset", // 🔥 REPEAT ENABLED
+         toggleActions: "restart none none reset",
         invalidateOnRefresh: true,
       },
     }
   );
 };
 
-/* =========================
-   WHY CHOOSE US (REPEAT ANIMATION)
-========================= */
 export const animateWhyCards = (container) => {
   if (!container) return;
 
@@ -74,9 +65,7 @@ export const animateWhyCards = (container) => {
   );
 };
 
-/* =========================
-   PROCESS (REPEAT ANIMATION)
-========================= */
+
 export const animateProcess = (container) => {
   if (!container) return;
 
@@ -101,9 +90,7 @@ export const animateProcess = (container) => {
   );
 };
 
-/* =========================
-   CTA (REPEAT OPTIONAL)
-========================= */
+
 export const animateCTA = (el) => {
   if (!el) return;
 

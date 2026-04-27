@@ -10,6 +10,7 @@ import Services from "./pages/services";
 import { Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import Signup from "./pages/signup";
+import Login from "./pages/login";
 import BlogDetail from "./pages/blogdetails";
 import ScrollToTop from "./components/Scrolltop";
 import ToggleTheme from "./components/toggletheme";
@@ -21,7 +22,9 @@ gsap.registerPlugin(ScrollTrigger);
 if (typeof window !== "undefined") {
   window.history.scrollRestoration = "manual";
 }
-
+window.addEventListener("load", () => {
+  window.scrollTo(0, 0);
+});
 ScrollTrigger.config({
   ignoreMobileResize: true,
 });
@@ -33,11 +36,11 @@ function App() {
   return (
     <>
       <ToggleTheme />
-     
       <Header />
       <ScrollToTop />
       <Routes>
         <Route path="/signup" element={<Signup />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/services" element={<Services />} />

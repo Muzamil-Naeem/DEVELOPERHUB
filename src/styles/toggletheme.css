@@ -1,6 +1,6 @@
 .theme-btn {
   position: fixed;
-  top: 90px;   /* 👈 pushes it below header */
+  top: 90px;
   right: 20px;
   z-index: 1000;
 

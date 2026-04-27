@@ -3,15 +3,12 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-/* =========================
-   HERO (CINEMATIC BUT SAFE)
-========================= */
 export const aboutHero = (title, text) => {
   const tl = gsap.timeline();
 
   tl.from(title, {
     opacity: 0,
-    y: 80, // reduced from 120
+    y: 80,
     duration: 1,
     ease: "power4.out",
     clearProps: "all",
@@ -30,13 +27,10 @@ export const aboutHero = (title, text) => {
   return tl;
 };
 
-/* =========================
-   STORY (CLEAN SLIDE)
-========================= */
 export const aboutStory = (el) => {
   return gsap.from(el, {
     opacity: 0,
-    x: -60, // reduced
+    x: -60,
     duration: 0.9,
     ease: "power3.out",
     clearProps: "all",
@@ -48,9 +42,6 @@ export const aboutStory = (el) => {
   });
 };
 
-/* =========================
-   MISSION / VISION (NO 3D)
-========================= */
 export const missionVision = (cards) => {
   return gsap.from(cards, {
     opacity: 0,
@@ -60,16 +51,13 @@ export const missionVision = (cards) => {
     ease: "power3.out",
     clearProps: "all",
     scrollTrigger: {
-      trigger: cards[0], // 🔥 important fix
+      trigger: cards[0],
       start: "top 85%",
       toggleActions: "restart none none reset",
     },
   });
 };
 
-/* =========================
-   VALUES GRID (STABLE)
-========================= */
 export const valuesGrid = (cards) => {
   return gsap.from(cards, {
     opacity: 0,
@@ -82,16 +70,13 @@ export const valuesGrid = (cards) => {
     ease: "power2.out",
     clearProps: "all",
     scrollTrigger: {
-      trigger: cards[0], // 🔥 important fix
+      trigger: cards[0],
       start: "top 85%",
       toggleActions: "restart none none reset",
     },
   });
 };
 
-/* =========================
-   WHY US (SMOOTH)
-========================= */
 export const whyUs = (items) => {
   return gsap.from(items, {
     opacity: 0,
@@ -101,16 +86,13 @@ export const whyUs = (items) => {
     ease: "power3.out",
     clearProps: "all",
     scrollTrigger: {
-      trigger: items[0], // 🔥 fix
+      trigger: items[0],
       start: "top 85%",
       toggleActions: "restart none none reset",
     },
   });
 };
 
-/* =========================
-   TIMELINE (CLEAN FLOW)
-========================= */
 export const timelineAnimation = (items) => {
   return gsap.from(items, {
     opacity: 0,
@@ -120,16 +102,13 @@ export const timelineAnimation = (items) => {
     ease: "power3.out",
     clearProps: "all",
     scrollTrigger: {
-      trigger: items[0], // 🔥 fix
+      trigger: items[0],
       start: "top 85%",
       toggleActions: "restart none none reset",
     },
   });
 };
 
-/* =========================
-   CTA (FOCUSED BUT SAFE)
-========================= */
 export const aboutCTA = (el) => {
   return gsap.from(el, {
     opacity: 0,

@@ -10,6 +10,7 @@ import {
   timelineAnimation,
   aboutCTA,
 } from "../animations/aboutanimation";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 function About() {
   const heroTitleRef = useRef(null);
@@ -29,6 +30,9 @@ const ctaRef = useRef(null);
   whyUs(whyRef.current);
   timelineAnimation(timelineRef.current);
   aboutCTA(ctaRef.current);
+  return () => {
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+    };
 }, []);
 
   const navigate = useNavigate();
@@ -36,7 +40,7 @@ const ctaRef = useRef(null);
   return (
     <div className="about-page">
 
-      {/* HERO */}
+      
       <section className="about-hero">
         <h1 ref={heroTitleRef}>About Our Company</h1>
         <p ref={heroTextRef}>
@@ -46,7 +50,6 @@ const ctaRef = useRef(null);
         </p>
       </section>
 
-      {/* STORY */}
       <section className="about-story" ref={storyRef}>
         <div className="container">
           <h2>Our Story</h2>
@@ -62,8 +65,6 @@ const ctaRef = useRef(null);
           </p>
         </div>
       </section>
-
-      {/* MISSION & VISION */}
       <section className="mission-vision">
         <div className="mv-grid">
           <div className="mv-card" ref={(el) => (mvRef.current[0] = el)}>
@@ -84,7 +85,6 @@ const ctaRef = useRef(null);
         </div>
       </section>
 
-      {/* VALUES */}
       <section className="values">
         <h2>Our Core Values</h2>
 
@@ -111,7 +111,6 @@ const ctaRef = useRef(null);
         </div>
       </section>
 
-      {/* WHY CHOOSE US */}
       <section className="why-us">
         <h2>Why Choose Us</h2>
 
@@ -133,7 +132,6 @@ const ctaRef = useRef(null);
         </div>
       </section>
 
-      {/* ⭐ NEW: OUR JOURNEY TIMELINE */}
       <section className="timeline">
         <h2>Our Journey</h2>
 
@@ -161,8 +159,6 @@ const ctaRef = useRef(null);
 
         </div>
       </section>
-
-      {/* CTA */}
       <section className="about-cta" ref={ctaRef}>
         <h2>Let’s Work Together</h2>
         <p>

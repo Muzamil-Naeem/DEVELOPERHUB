@@ -1,20 +1,33 @@
 import { Link } from "react-router-dom";
 import "../styles/header.css";
 import { useState, useEffect, useRef } from "react";
+import { signOut, onAuthStateChanged } from "firebase/auth";
+import { auth } from "../firebase";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 export default function Header() {
+  const navigate = useNavigate();
+  const [user, setUser] = useState(null);
+
   const [servicesOpen, setServicesOpen] = useState(false);
   const [moreOpen, setMoreOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
   const navRef = useRef(null);
 
-  // lock body scroll when menu open
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "auto";
   }, [menuOpen]);
 
-  // close on outside click
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (navRef.current && !navRef.current.contains(e.target)) {
@@ -44,19 +57,33 @@ export default function Header() {
     setServicesOpen(false);
   };
 
+  // 🔥 LOGOUT
+  const handleLogout = async () => {
+    await signOut(auth);
+
+    setUser(null);
+
+    navigate("/login");
+
+    Swal.fire({
+      icon: "success",
+      title: "Logged Out",
+      text: "You have been logged out successfully"
+    });
+  };
+
   return (
     <header className="header" ref={navRef}>
 
-      {/* LOGO */}
       <h1>Developers Hub</h1>
 
-      {/* OVERLAY (mobile background click close) */}
+      {/* overlay */}
       <div
         className={`menu-overlay ${menuOpen ? "active" : ""}`}
         onClick={closeMenu}
       />
 
-      {/* HAMBURGER */}
+      {/* hamburger */}
       <div
         className="menu-icon"
         onClick={() => setMenuOpen((prev) => !prev)}
@@ -64,7 +91,6 @@ export default function Header() {
         ☰
       </div>
 
-      {/* NAV LINKS */}
       <nav className={`nav-links ${menuOpen ? "active" : ""}`}>
 
         <Link to="/" onClick={closeMenu}>Home</Link>
@@ -82,7 +108,6 @@ export default function Header() {
           </div>
         </div>
 
-        {/* MORE */}
         <div className="dropdown">
           <span className="dropdown-title" onClick={toggleMore}>
             More ▾
@@ -94,11 +119,21 @@ export default function Header() {
             <Link to="/contact" onClick={closeMenu}>Contact</Link>
           </div>
         </div>
+        {user ? (
+          <button className="login-btn" onClick={handleLogout}>
+            Logout
+          </button>
+        ) : (
+          <>
+            <Link to="/login" className="login-btn" onClick={closeMenu}>
+              Login
+            </Link>
 
-        {/* LOGIN */}
-        <Link to="/login" className="login-btn" onClick={closeMenu}>
-          Login
-        </Link>
+            <Link to="/signup" className="signup-btn" onClick={closeMenu}>
+              Sign Up
+            </Link>
+          </>
+        )}
 
       </nav>
     </header>
