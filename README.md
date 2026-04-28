@@ -67,7 +67,7 @@ The application also includes user authentication and real-time data storage usi
 
 ## 📅 Booking System
 - Users can schedule appointments via the booking interface
-- - Only authenticated users can book a meeting
+- Only authenticated users can book a meeting
 - Booking data is stored in Firebase Firestore
 - Designed to simulate a real-world client scheduling system
 
