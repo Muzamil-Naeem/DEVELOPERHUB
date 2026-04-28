@@ -12,7 +12,7 @@ import { ToastContainer } from "react-toastify";
 import Signup from "./pages/signup";
 import Login from "./pages/login";
 import BlogDetail from "./pages/blogdetails";
-import ScrollToTop from "./components/Scrolltop";
+import ScrollToTop from "./components/scrolltop";
 import ToggleTheme from "./components/toggletheme";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
