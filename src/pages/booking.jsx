@@ -20,7 +20,7 @@ import {
   bookingFieldsAnim,
   bookingCardsAnim,
   bookingInfoAnim
-} from "../animations/bookingAnimations";
+} from "../animations/bookinganimations";
 
 function Booking() {
   const navigate = useNavigate();
